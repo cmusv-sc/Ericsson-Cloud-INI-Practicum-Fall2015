@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import api_gateway.models.MovieDetails;
-import api_gateway.services.movie.MovieIntegrationService;
-import api_gateway.services.ratings.RatingIntegrationService;
 import rx.Observable;
 import rx.Observer;
+import api_gateway.models.MovieDetails;
+import api_gateway.services.images.ImageIntegrationService;
+import api_gateway.services.movie.MovieIntegrationService;
+import api_gateway.services.ratings.RatingIntegrationService;
 
 @RestController
 @RequestMapping("/movie")
@@ -23,16 +24,20 @@ public class GatewayController {
     @Autowired
     RatingIntegrationService ratingIntegrationService;
 
-    
+    @Autowired
+    ImageIntegrationService imageIntegrationService;
+
     @RequestMapping(value="{mID}", method=RequestMethod.GET)
     public DeferredResult<MovieDetails> getMovieDetails(@PathVariable String mID) {
         Observable<MovieDetails> details = Observable.zip(
-        		movieIntegrationService.getMovie(mID),
-        		ratingIntegrationService.ratingFor(mID),
-                (movie, ratings) -> {
+				movieIntegrationService.getMovie(mID),
+				ratingIntegrationService.ratingFor(mID),
+				imageIntegrationService.imageFor(mID),
+                (movie, ratings, image) -> {
                     MovieDetails movieDetails = new MovieDetails();
                     movieDetails.setMovie(movie);
                     movieDetails.setRatings(ratings);
+                    movieDetails.setImage(image);
                     return movieDetails;
                 }
         );
