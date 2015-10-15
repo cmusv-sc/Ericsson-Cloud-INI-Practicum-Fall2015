@@ -5,11 +5,21 @@ import java.util.List;
 import api_gateway.services.images.models.Image;
 import api_gateway.services.movie.models.Movie;
 import api_gateway.services.ratings.models.Rating;
+import api_gateway.services.similar_movie.models.SimilarMovie;
 
 public class MovieDetails {
-	private Movie movie;
-	private List<Rating> ratings;
 	private Image image;
+	private Movie movie;
+    private List<Rating> ratings;
+    private SimilarMovie similars;
+
+	public SimilarMovie getSimilars() {
+		return similars;
+	}
+
+	public void setSimilars(SimilarMovie similars) {
+		this.similars = similars;
+	}
 
 	public Movie getMovie() {
 		return movie;

@@ -1,0 +1,7 @@
+Prerequsites for local dev run:
+  install mongoDB locally
+  type: mongod to run Database
+  type: mvn spring-boot:run under each service folder
+
+
+PS: Please add instructions and do not assume your teammates know all the stuff.
