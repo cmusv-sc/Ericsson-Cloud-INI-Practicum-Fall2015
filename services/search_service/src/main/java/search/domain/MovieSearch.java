@@ -1,4 +1,4 @@
-package search_service.domain;
+package search.domain;
 
 import org.springframework.data.annotation.Id;
 
