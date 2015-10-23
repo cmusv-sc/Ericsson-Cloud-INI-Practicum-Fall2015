@@ -26,6 +26,13 @@ public class RatingsServiceApplication implements CommandLineRunner {
 		repository.save(new Rating("1", "1", "1", 5));
 		repository.save(new Rating("2", "1", "2", 4));
 		repository.save(new Rating("3", "2", "1", 4));
+		repository.save(new Rating("4", "2", "1", 4));
+		repository.save(new Rating("5", "2", "1", 4));
+		repository.save(new Rating("6", "2", "1", 4));
+		repository.save(new Rating("7", "2", "1", 4));
+		repository.save(new Rating("8", "2", "1", 4));
+		repository.save(new Rating("9", "2", "1", 4));
+		repository.save(new Rating("10", "2", "1", 4));
 		
 		for (Rating rating : repository.findAll()) {
 			System.out.println(rating);
