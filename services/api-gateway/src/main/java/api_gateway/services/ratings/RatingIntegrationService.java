@@ -5,15 +5,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import rx.Observable;
+import api_gateway.services.ratings.models.Rating;
+import api_gateway.services.ratings.models.RatingList;
+
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
-import org.springframework.http.HttpMethod;
-
-import api_gateway.services.ratings.models.Rating;
-import rx.Observable;
 
 @Service
 public class RatingIntegrationService {
@@ -31,6 +32,16 @@ public class RatingIntegrationService {
         };
     }
 
+    @HystrixCommand(fallbackMethod = "stubRating")
+    public Observable<RatingList> getRatingList(final Integer n) {
+        return new ObservableResult<RatingList>() {
+            @Override
+            public RatingList invoke() {
+                return restTemplate.getForObject("http://rating/movie/latest/{n}", RatingList.class, n);
+            }
+        };
+    }
+    
     private List<Rating> stubRating(String mID) {
         Rating rating = new Rating();
         rating.setMovieId(mID);

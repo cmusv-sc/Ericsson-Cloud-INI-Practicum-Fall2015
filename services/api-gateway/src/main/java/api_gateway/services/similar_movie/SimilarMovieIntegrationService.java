@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import rx.Observable;
+import api_gateway.services.ratings.models.RatingList;
+import api_gateway.services.similar_movie.models.SimilarMovie;
+import api_gateway.services.similar_movie.models.SimilarMovieList;
+
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
-
-import api_gateway.services.similar_movie.models.SimilarMovie;
-import rx.Observable;
 
 @Service
 public class SimilarMovieIntegrationService {
@@ -20,10 +22,20 @@ public class SimilarMovieIntegrationService {
         return new ObservableResult<SimilarMovie>() {
             @Override
             public SimilarMovie invoke() {
-                return restTemplate.getForObject("http://similar-movies//similar-movie/{mID}", SimilarMovie.class, mID);
+                return restTemplate.getForObject("http://similar-movies/similar-movie/{mID}", SimilarMovie.class, mID);
             }
         };
     }
+	
+	 @HystrixCommand(fallbackMethod = "stubSimilarMovie")
+	    public Observable<SimilarMovieList> getSimilarMovieList(final Integer n) {
+	        return new ObservableResult<SimilarMovieList>() {
+	            @Override
+	            public SimilarMovieList invoke() {
+	                return restTemplate.getForObject("http://similar-movies/similar-movie/latest/{n}", SimilarMovieList.class, n);
+	            }
+	        };
+	    }
 
 	private SimilarMovie stubSimilarMovie(final String mID) {
 		SimilarMovie stub = new SimilarMovie();

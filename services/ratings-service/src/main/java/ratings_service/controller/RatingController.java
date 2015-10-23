@@ -15,7 +15,7 @@ import ratings_service.domain.RatingList;
 import ratings_service.domain.RatingRepository;
 
 @RestController
-@RequestMapping("/rating")
+@RequestMapping("/movie")
 public class RatingController {
 
 	@Autowired

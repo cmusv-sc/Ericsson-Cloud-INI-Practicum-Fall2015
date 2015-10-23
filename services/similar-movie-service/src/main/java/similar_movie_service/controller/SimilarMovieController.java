@@ -1,5 +1,8 @@
 package similar_movie_service.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import similar_movie_service.domain.SimilarMovie;
+import similar_movie_service.domain.SimilarMovieList;
 import similar_movie_service.domain.SimilarMovieRepository;
 
 @RestController
@@ -22,6 +26,16 @@ public class SimilarMovieController {
 		return repository.findById(id);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/latest/{n}")
+	public SimilarMovieList getAllRatings(@PathVariable Integer n) {
+		List<SimilarMovie> similarMovieList = new ArrayList<SimilarMovie>();
+		// TODO: Change logic here
+		for (int i = 1; i <= n; i++) {
+			similarMovieList.add(repository.findById(String.valueOf(i)));
+		}
+		return new SimilarMovieList(similarMovieList);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST)
 	public SimilarMovie postMovie(@RequestBody SimilarMovie movie){
 		return repository.save(movie);

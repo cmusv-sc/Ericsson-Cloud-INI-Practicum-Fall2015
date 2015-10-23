@@ -1,5 +1,8 @@
 package api_gateway.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +13,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import rx.Observable;
 import rx.Observer;
 import api_gateway.models.MovieDetails;
+import api_gateway.models.MovieDetailsList;
 import api_gateway.services.images.ImageIntegrationService;
 import api_gateway.services.movie.MovieIntegrationService;
 import api_gateway.services.ratings.RatingIntegrationService;
@@ -63,6 +67,50 @@ public class GatewayController {
 
             @Override
             public void onNext(MovieDetails movieDetails) {
+                result.setResult(movieDetails);
+            }
+        });
+        return result;
+    }
+    
+    
+    @RequestMapping(value="/latest/{n}", method=RequestMethod.GET)
+    public DeferredResult<MovieDetailsList> getMovieListDetails(@PathVariable Integer n) { 	
+    	Observable<MovieDetailsList> details = Observable.zip(
+    			movieIntegrationService.getMovieList(n),
+    			ratingIntegrationService.getRatingList(n),
+    			imageIntegrationService.getImageList(n),
+    			similarMovieIntegrationService.getSimilarMovieList(n),
+                (movie, ratings, image, similars) -> {
+                	List<MovieDetails> list = new ArrayList<MovieDetails>();
+                	for(int i = 0; i < n; i++) {
+                		 MovieDetails movieDetails = new MovieDetails();
+                         movieDetails.setMovie(movie.getMovieList().get(i));
+                         movieDetails.setRatings(ratings.getRatingList());
+                         movieDetails.setSimilars(similars.getSimilarMovieList().get(i));
+                         movieDetails.setImage(image.getImageList().get(i));
+                         list.add(movieDetails);
+                	}
+                   
+                    return new MovieDetailsList(list);
+                }
+            );
+        return toDeferredListResult(details);
+    }
+
+    public DeferredResult<MovieDetailsList> toDeferredListResult(Observable<MovieDetailsList> details) {
+        DeferredResult<MovieDetailsList> result = new DeferredResult<>();
+        details.subscribe(new Observer<MovieDetailsList>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+            }
+
+            @Override
+            public void onNext(MovieDetailsList movieDetails) {
                 result.setResult(movieDetails);
             }
         });

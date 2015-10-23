@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.netflix.discovery.DiscoveryClient;
 
 @RestController
+@RequestMapping("/image")
 public class ImageController {
 
 	private static final String PATH = "/home/ubuntu/images";

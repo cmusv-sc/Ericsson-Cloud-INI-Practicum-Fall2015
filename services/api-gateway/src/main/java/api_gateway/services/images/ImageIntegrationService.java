@@ -1,8 +1,5 @@
 package api_gateway.services.images;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -11,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import rx.Observable;
 import api_gateway.services.images.models.Image;
+import api_gateway.services.images.models.ImageList;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
@@ -31,6 +29,15 @@ public class ImageIntegrationService {
         };
     }
 
+    @HystrixCommand(fallbackMethod = "stubImage")
+    public Observable<ImageList> getImageList(final Integer n) {
+        return new ObservableResult<ImageList>() {
+            @Override
+            public ImageList invoke() {
+                return restTemplate.getForObject("http://images/image/latest/{n}", ImageList.class, n);
+            }
+        };
+    }
     private Image stubImage(String mID) {
        Image image = new Image();
         image.setImage("iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==");

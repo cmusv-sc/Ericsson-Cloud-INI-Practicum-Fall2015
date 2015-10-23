@@ -23,7 +23,25 @@ public class SimilarMovieService implements CommandLineRunner {
 		repository.deleteAll();
 		repository.save(new SimilarMovie("1","Seven (Se7en) (1995)", 
 				"Fight Club", "House of Cards", "Gone Girl"));
-
+		repository.save(new SimilarMovie("2","Seven (Se7en) (1995)", 
+				"Fight Club", "House of Cards", "Gone Girl"));
+		repository.save(new SimilarMovie("3","Seven (Se7en) (1995)", 
+				"Fight Club", "House of Cards", "Gone Girl"));
+		repository.save(new SimilarMovie("4","Seven (Se7en) (1995)", 
+				"Fight Club", "House of Cards", "Gone Girl"));
+		repository.save(new SimilarMovie("5","Seven (Se7en) (1995)", 
+				"Fight Club", "House of Cards", "Gone Girl"));
+		repository.save(new SimilarMovie("6","Seven (Se7en) (1995)", 
+				"Fight Club", "House of Cards", "Gone Girl"));
+		repository.save(new SimilarMovie("7","Seven (Se7en) (1995)", 
+				"Fight Club", "House of Cards", "Gone Girl"));
+		repository.save(new SimilarMovie("8","Seven (Se7en) (1995)", 
+				"Fight Club", "House of Cards", "Gone Girl"));
+		repository.save(new SimilarMovie("9","Seven (Se7en) (1995)", 
+				"Fight Club", "House of Cards", "Gone Girl"));
+		repository.save(new SimilarMovie("10","Seven (Se7en) (1995)", 
+				"Fight Club", "House of Cards", "Gone Girl"));
+		
 		System.out.println("findAll():");
 		System.out.println("-------------------------------");
 		for (SimilarMovie movie : repository.findAll()) {
