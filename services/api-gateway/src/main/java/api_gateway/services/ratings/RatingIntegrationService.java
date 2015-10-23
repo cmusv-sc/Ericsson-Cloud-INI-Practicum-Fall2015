@@ -62,7 +62,7 @@ public class RatingIntegrationService {
 		}
 		
 		RatingList ratingList = new RatingList();
-		ratingList.setRatingList(list);
+		ratingList.setList(list);
 		return ratingList;
 	}
 }
