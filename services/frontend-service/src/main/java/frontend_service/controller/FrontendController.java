@@ -15,12 +15,14 @@ import org.springframework.web.client.RestTemplate;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.DiscoveryClient;
 
+
 import edu.cmu.ini.ericsson.practicum.models.apiGatewayService.MovieDetails;
 import edu.cmu.ini.ericsson.practicum.models.userService.User;
 
+
 @Controller
 public class FrontendController {
-	
+
 	@Autowired
 	DiscoveryClient discoveryClient;
 
@@ -28,7 +30,7 @@ public class FrontendController {
 	public String login(Model model) {
 		return "login";
 	}
-	
+
 	@RequestMapping(value = "/movie/list/{n}", method=RequestMethod.GET)
 	public String index(@PathVariable String n, Model model) {
 		InstanceInfo gatewayInstance = discoveryClient.getNextServerFromEureka("API-GATEWAY", false);
