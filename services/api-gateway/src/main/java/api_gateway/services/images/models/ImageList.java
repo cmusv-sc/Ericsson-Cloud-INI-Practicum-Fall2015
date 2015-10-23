@@ -4,13 +4,14 @@ import java.util.List;
 
 public class ImageList {
 
-	private final List<Image> imageList;
+	private List<Image> list;
 
-	public ImageList(List<Image> imageList) {
-		this.imageList = imageList;
+	public List<Image> getList() {
+		return list;
 	}
 
-	public List<Image> getImageList() {
-		return imageList;
+	public void setList(List<Image> list) {
+		this.list = list;
 	}
+
 }

@@ -4,13 +4,14 @@ import java.util.List;
 
 public class SimilarMovieList {
 
-	private final List<SimilarMovie> similarMovieList;
-
-	public SimilarMovieList(List<SimilarMovie> similarMovieList) {
-		this.similarMovieList = similarMovieList;
-	}
+	private List<SimilarMovie> similarMovieList;
 
 	public List<SimilarMovie> getSimilarMovieList() {
 		return similarMovieList;
 	}
+
+	public void setSimilarMovieList(List<SimilarMovie> similarMovieList) {
+		this.similarMovieList = similarMovieList;
+	}
+
 }
