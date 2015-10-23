@@ -14,7 +14,7 @@ import edu.cmu.ini.ericsson.practicum.models.ratingsService.Rating;
 import ratings_service.domain.RatingRepository;
 
 @RestController
-@RequestMapping("/rating")
+@RequestMapping("/movie")
 public class RatingController {
 
 	@Autowired

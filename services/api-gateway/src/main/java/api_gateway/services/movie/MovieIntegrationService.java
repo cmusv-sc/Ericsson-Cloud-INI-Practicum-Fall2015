@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import rx.Observable;
+
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
 
 import edu.cmu.ini.ericsson.practicum.models.movieService.Movie;
 import rx.Observable;
-
 
 @Service
 public class MovieIntegrationService {
@@ -27,6 +28,16 @@ public class MovieIntegrationService {
         };
     }
 
+	@HystrixCommand(fallbackMethod = "stubMovie")
+    public Observable<MovieList> getMovieList(final Integer n) {
+        return new ObservableResult<MovieList>() {
+            @Override
+            public MovieList invoke() {
+                return restTemplate.getForObject("http://movies/movie/latest/{n}", MovieList.class, n);
+            }
+        };
+    }
+	
     private Movie stubMovie(final String mID) {
         Movie stub = new Movie();
 		stub.setCast(null);

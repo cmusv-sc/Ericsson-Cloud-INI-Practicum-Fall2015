@@ -20,6 +20,7 @@ import com.netflix.discovery.DiscoveryClient;
 import edu.cmu.ini.ericsson.practicum.models.imageService.Image;
 
 @RestController
+@RequestMapping("/image")
 public class ImageController {
 
 	private static final String PATH = "/home/ubuntu/images";
