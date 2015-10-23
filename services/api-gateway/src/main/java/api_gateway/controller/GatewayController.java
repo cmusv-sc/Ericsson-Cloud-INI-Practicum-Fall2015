@@ -83,7 +83,7 @@ public class GatewayController {
 					for (int i = 0; i < Integer.parseInt(n); i++) {
 						MovieDetails movieDetails = new MovieDetails();
 						movieDetails.setMovie(movie.getMovie().get(i));
-						movieDetails.setRatings(ratings.getList());
+						movieDetails.setRatings(ratings.getList().get(i));
 						movieDetails.setSimilars(similars.getSimilarMovieList().get(i));
 						movieDetails.setImage(image.getList().get(i));
 						list.add(movieDetails);

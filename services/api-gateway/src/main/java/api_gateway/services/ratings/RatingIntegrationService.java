@@ -52,13 +52,13 @@ public class RatingIntegrationService {
     }
     
 	private RatingList stubRatingList(final String n) {
-		List<Rating> list = new ArrayList<Rating>();
+		List<List<Rating>> list = new ArrayList<List<Rating>>();
 		for (int i = 1; i <= Integer.parseInt(n); i++) {
 			Rating rating = new Rating();
 			rating.setMovieId(String.valueOf(i));
 			rating.setRating(3);
 			rating.setUserId("1");
-			list.add(rating);
+			list.add(Arrays.asList(rating));
 		}
 		
 		RatingList ratingList = new RatingList();

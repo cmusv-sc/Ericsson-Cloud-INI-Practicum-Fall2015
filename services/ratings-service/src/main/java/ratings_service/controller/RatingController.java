@@ -28,10 +28,10 @@ public class RatingController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/latest/{n}")
 	public RatingList getAllRatings(@PathVariable String n) {
-		List<Rating> ratingList = new ArrayList<Rating>();
+		List<List<Rating>> ratingList = new ArrayList<List<Rating>>();
 		// TODO: Change logic here
 		for (int i = 1; i <= Integer.parseInt(n); i++) {
-			ratingList.add(repository.findById(String.valueOf(i)));
+			ratingList.add(repository.findByMovieId(String.valueOf(i)));
 		}
 		
 		RatingList list = new RatingList();
