@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
-
 
 import rx.Observable;
 import rx.Observer;
@@ -127,22 +125,22 @@ public class GatewayController {
         return toDeferredListResult(details);
     }
 
-    public DeferredResult<MovieDetailsList> toDeferredListResult(Observable<MovieDetailsList> details) {
-        DeferredResult<MovieDetailsList> result = new DeferredResult<>();
-        details.subscribe(new Observer<MovieDetailsList>() {
-            @Override
-            public void onCompleted() {
-            }
+	public DeferredResult<MovieDetailsList> toDeferredListResult(Observable<MovieDetailsList> details) {
+		DeferredResult<MovieDetailsList> result = new DeferredResult<>();
+		details.subscribe(new Observer<MovieDetailsList>() {
+			@Override
+			public void onCompleted() {
+			}
 
-            @Override
-            public void onError(Throwable throwable) {
-            }
+			@Override
+			public void onError(Throwable throwable) {
+			}
 
-            @Override
-            public void onNext(MovieDetailsList movieDetails) {
-                result.setResult(movieDetails);
-            }
-        });
-        return result;
-    }
+			@Override
+			public void onNext(MovieDetailsList movieDetails) {
+				result.setResult(movieDetails);
+			}
+		});
+		return result;
+	}
 }
