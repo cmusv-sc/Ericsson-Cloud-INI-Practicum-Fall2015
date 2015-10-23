@@ -23,16 +23,16 @@ public class MovieServiceApplication implements CommandLineRunner {
 	@Override
 	public void run(String... arg0) throws Exception {
 		repository.deleteAll();
-		repository.save(new Movie("1","Seven (Se7en) (1995)", "01-Jan-1995", "http://google.com"));
-		repository.save(new Movie("2","Eight (Se7en) (1995)", "01-Jan-1995", "http://google.com"));
-		repository.save(new Movie("3","Nine (Se7en) (1995)", "01-Jan-1995", "http://google.com"));
-		repository.save(new Movie("4","Ten (Se7en) (1995)", "01-Jan-1995", "http://google.com"));
-		repository.save(new Movie("5","Eleven (Se7en) (1995)", "01-Jan-1995", "http://google.com"));
-		repository.save(new Movie("6","Twelve (Se7en) (1995)", "01-Jan-1995", "http://google.com"));
-		repository.save(new Movie("7","Thirteen (Se7en) (1995)", "01-Jan-1995", "http://google.com"));
-		repository.save(new Movie("8","Fourteen (Se7en) (1995)", "01-Jan-1995", "http://google.com"));
-		repository.save(new Movie("9","Fifteen (Se7en) (1995)", "01-Jan-1995", "http://google.com"));
-		repository.save(new Movie("10","Sixteen (Se7en) (1995)", "01-Jan-1995", "http://google.com"));
+		repository.save(new Movie("1","Se7en", "01-Jan-1995", "http://google.com"));
+		repository.save(new Movie("2","Gone Girl", "03-Oct-2014", "http://google.com"));
+		repository.save(new Movie("3","Fight Club", "15-Oct-1999", "http://google.com"));
+		repository.save(new Movie("4","Pulp Fiction", "14-Oct-1994", "http://google.com"));
+		repository.save(new Movie("5","Django Unchained", "25-Dec-2012", "http://google.com"));
+		repository.save(new Movie("6","Natural Born Killers", "26 Aug 1994", "http://google.com"));
+		repository.save(new Movie("7","Sin City", "01 Apr 2005", "http://google.com"));
+		repository.save(new Movie("8","Reservoir Dogs", "02 Sep 1992", "http://google.com"));
+		repository.save(new Movie("9","The Matrix", "31 Mar 1999", "http://google.com"));
+		repository.save(new Movie("10","The Martian", "02 Oct 2015", "http://google.com"));
 		
 		
 		System.out.println("findAll():");
