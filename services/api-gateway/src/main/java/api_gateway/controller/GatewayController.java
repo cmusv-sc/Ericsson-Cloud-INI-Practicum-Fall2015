@@ -75,7 +75,7 @@ public class GatewayController {
     
     
     @RequestMapping(value="/latest/{n}", method=RequestMethod.GET)
-    public DeferredResult<MovieDetailsList> getMovieListDetails(@PathVariable Integer n) { 	
+    public DeferredResult<MovieDetailsList> getMovieListDetails(@PathVariable String n) { 	
     	Observable<MovieDetailsList> details = Observable.zip(
     			movieIntegrationService.getMovieList(n),
     			ratingIntegrationService.getRatingList(n),
@@ -83,7 +83,7 @@ public class GatewayController {
     			similarMovieIntegrationService.getSimilarMovieList(n),
                 (movie, ratings, image, similars) -> {
                 	List<MovieDetails> list = new ArrayList<MovieDetails>();
-                	for(int i = 0; i < n; i++) {
+                	for(int i = 0; i < Integer.parseInt(n); i++) {
                 		 MovieDetails movieDetails = new MovieDetails();
                          movieDetails.setMovie(movie.getMovieList().get(i));
                          movieDetails.setRatings(ratings.getRatingList());

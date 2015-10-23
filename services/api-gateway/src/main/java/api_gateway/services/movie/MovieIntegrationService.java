@@ -1,5 +1,8 @@
 package api_gateway.services.movie;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -28,8 +31,8 @@ public class MovieIntegrationService {
         };
     }
 
-	@HystrixCommand(fallbackMethod = "stubMovie")
-    public Observable<MovieList> getMovieList(final Integer n) {
+	@HystrixCommand(fallbackMethod = "stubMovieList")
+    public Observable<MovieList> getMovieList(final String n) {
         return new ObservableResult<MovieList>() {
             @Override
             public MovieList invoke() {
@@ -45,5 +48,18 @@ public class MovieIntegrationService {
         stub.setName("Default Movie");
         return stub;
     }
+    
+	private MovieList stubMovieList(final String mID) {
+		List<Movie> list = new ArrayList<Movie>();
+
+		for (int i = 1; i <= Integer.parseInt(mID); i++) {
+			Movie stub = new Movie();
+			stub.setDataReleased("01-Jan-2001");
+			stub.setImdbURI("www.imdb.com");
+			stub.setName("8IGHT");
+			list.add(stub);
+		}
+		return new MovieList(list);
+	}
 
 }

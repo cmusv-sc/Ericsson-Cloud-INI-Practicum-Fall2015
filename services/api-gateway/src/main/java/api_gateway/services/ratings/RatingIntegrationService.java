@@ -1,5 +1,6 @@
 package api_gateway.services.ratings;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,8 +33,8 @@ public class RatingIntegrationService {
         };
     }
 
-    @HystrixCommand(fallbackMethod = "stubRating")
-    public Observable<RatingList> getRatingList(final Integer n) {
+    @HystrixCommand(fallbackMethod = "stubRatingList")
+    public Observable<RatingList> getRatingList(final String n) {
         return new ObservableResult<RatingList>() {
             @Override
             public RatingList invoke() {
@@ -49,4 +50,16 @@ public class RatingIntegrationService {
         rating.setUserId("1");
         return Arrays.asList(rating);
     }
+    
+	private RatingList stubRatingList(final String n) {
+		List<Rating> list = new ArrayList<Rating>();
+		for (int i = 1; i <= Integer.parseInt(n); i++) {
+			Rating rating = new Rating();
+			rating.setMovieId(String.valueOf(i));
+			rating.setRating(3);
+			rating.setUserId("1");
+			list.add(rating);
+		}
+		return new RatingList(list);
+	}
 }
