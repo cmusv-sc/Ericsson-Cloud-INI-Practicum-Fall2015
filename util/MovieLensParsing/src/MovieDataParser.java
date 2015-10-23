@@ -3,12 +3,12 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieLensDataSetParser {
+public class MovieDataParser {
 
 	private final static String SEPARATOR = "\\|";
 	private final String fileName;
 
-	public MovieLensDataSetParser(final String fileName) {
+	public MovieDataParser(final String fileName) {
 		this.fileName = fileName;
 	}
 
