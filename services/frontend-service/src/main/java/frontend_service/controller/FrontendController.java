@@ -1,5 +1,8 @@
 package frontend_service.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,28 +23,18 @@ public class FrontendController {
 	
 	@Autowired
 	DiscoveryClient discoveryClient;
-
-	@RequestMapping(value = "/movie/{id}", method=RequestMethod.GET)
-	public String index(@PathVariable String id, 
-			@RequestParam("uid") String userId,
-			@RequestParam("pwd") String pwd,
-			Model model) {
-		InstanceInfo gatewayInstance = discoveryClient.getNextServerFromEureka("API-GATEWAY", false);
-		RestTemplate template = new RestTemplate();
-		User user = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/user/"+userId, User.class);
-		System.out.println(user);
-		if (user.getPassword().equals(pwd)) {
-			MovieDetails response = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/"+id, MovieDetails.class);		
-	        model.addAttribute("response", response);
-	        model.addAttribute("user", user);
-	        return "index";
-		} else {
-			return "login";
-		}
-	}
 	
 	@RequestMapping(value = "/login", method=RequestMethod.GET)
 	public String login(Model model) {
 		return "login";
+	}
+	
+	@RequestMapping(value = "/movie/list/{n}", method=RequestMethod.GET)
+	public String index(@PathVariable String n, Model model) {
+		InstanceInfo gatewayInstance = discoveryClient.getNextServerFromEureka("API-GATEWAY", false);
+		RestTemplate template = new RestTemplate();
+		MovieDetailsList response = template.getForObject(gatewayInstance.getHomePageUrl()+"/latest/"+ n, MovieDetailsList.class);	
+        model.addAttribute("movies", response.getMovieList());
+        return "index";
 	}
 }
