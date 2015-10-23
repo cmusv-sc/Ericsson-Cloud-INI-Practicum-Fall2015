@@ -23,7 +23,7 @@ public class FrontendController {
 	
 	@Autowired
 	DiscoveryClient discoveryClient;
-	
+
 	@RequestMapping(value = "/login", method=RequestMethod.GET)
 	public String login(Model model) {
 		return "login";
@@ -33,7 +33,7 @@ public class FrontendController {
 	public String index(@PathVariable String n, Model model) {
 		InstanceInfo gatewayInstance = discoveryClient.getNextServerFromEureka("API-GATEWAY", false);
 		RestTemplate template = new RestTemplate();
-		MovieDetailsList response = template.getForObject(gatewayInstance.getHomePageUrl()+"/latest/"+ n, MovieDetailsList.class);	
+		MovieDetailsList response = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/latest/"+ n, MovieDetailsList.class);	
         model.addAttribute("movies", response.getMovieList());
         return "index";
 	}
