@@ -23,24 +23,24 @@ public class FrontendController {
 	@Autowired
 	DiscoveryClient discoveryClient;
 
-//	@RequestMapping(value = "/movie/{id}", method=RequestMethod.GET)
-//	public String index(@PathVariable String id, Model model) {
-//		InstanceInfo gatewayInstance = discoveryClient.getNextServerFromEureka("API-GATEWAY", false);
-//		RestTemplate template = new RestTemplate();
-//		MovieDetails response = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/"+id, MovieDetails.class);	
-//		List<MovieDetails> movies = new ArrayList<>();
-//		movies.add(response);
-//		movies.add(response);
-//		movies.add(response);
-//        model.addAttribute("movies", movies);
-//        return "index";
-//	}
+	@RequestMapping(value = "/movie/{id}", method=RequestMethod.GET)
+	public String indexa(@PathVariable String id, Model model) {
+		InstanceInfo gatewayInstance = discoveryClient.getNextServerFromEureka("API-GATEWAY", false);
+		RestTemplate template = new RestTemplate();
+		MovieDetails response = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/"+id, MovieDetails.class);	
+		List<MovieDetails> movies = new ArrayList<>();
+		movies.add(response);
+		movies.add(response);
+		movies.add(response);
+        model.addAttribute("movies", movies);
+        return "index";
+	}
 	
 	@RequestMapping(value = "/movie/list/{n}", method=RequestMethod.GET)
 	public String index(@PathVariable String n, Model model) {
 		InstanceInfo gatewayInstance = discoveryClient.getNextServerFromEureka("API-GATEWAY", false);
 		RestTemplate template = new RestTemplate();
-		MovieDetailsList response = template.getForObject(gatewayInstance.getHomePageUrl()+"/latest/"+ n, MovieDetailsList.class);	
+		MovieDetailsList response = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/latest/"+ n, MovieDetailsList.class);	
         model.addAttribute("movies", response.getMovieList());
         return "index";
 	}
