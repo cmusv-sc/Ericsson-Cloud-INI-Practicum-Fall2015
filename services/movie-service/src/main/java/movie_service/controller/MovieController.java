@@ -13,30 +13,31 @@ import movie_service.domain.MovieRepository;
 @RestController
 @RequestMapping("/movie")
 public class MovieController {
-	
+
 	@Autowired
 	private MovieRepository repository;
-	
-	@RequestMapping(method=RequestMethod.GET, value="{id}")
-	public Movie getMovie(@PathVariable String id){
+
+	@RequestMapping(method = RequestMethod.GET, value = "{id}")
+	public Movie getMovie(@PathVariable String id) {
 		return repository.findById(id);
 	}
-	
-	@RequestMapping(method=RequestMethod.POST)
-	public Movie postMovie(@RequestBody Movie movie){
+
+	@RequestMapping(method = RequestMethod.POST)
+	public Movie postMovie(@RequestBody Movie movie) {
 		return repository.save(movie);
 	}
-	
-	@RequestMapping(method=RequestMethod.PUT, value="{id}")
+
+	@RequestMapping(method = RequestMethod.PUT, value = "{id}")
 	public Movie updateMovie(@PathVariable String id, @RequestBody Movie movie) {
-	    Movie update = repository.findOne(id);
-	    update.setImdbURI(movie.getImdbURI());
-	    update.setName(movie.getName());
-	    update.setDataReleased(movie.getDataReleased());
-	    return repository.save(update);
-	}	
-	
-	@RequestMapping(method=RequestMethod.DELETE, value="{id}")
+		Movie update = repository.findOne(id);
+		update.setImdbUrl(movie.getImdbUrl());
+		update.setReleaseDate(movie.getReleaseDate());
+		update.setName(movie.getName());
+		update.setGenres(movie.getGenres());
+		return repository.save(update);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE, value = "{id}")
 	public void deleteMovie(@PathVariable String id) {
 		repository.delete(id);
 	}
