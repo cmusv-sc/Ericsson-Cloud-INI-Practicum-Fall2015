@@ -1,11 +1,12 @@
 package image_service;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,26 +21,42 @@ import com.netflix.discovery.DiscoveryClient;
 public class ImageController {
 
 	private static final String PATH = "/home/ubuntu/images";
-
+	private static final HashMap<String, String> imageLinks = new HashMap<String, String>();
+	private static final String DEFAULT_IMAGE_LINK = "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg";
+	
+	static {
+		imageLinks.put("1", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
+		imageLinks.put("2", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
+		imageLinks.put("3", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
+		imageLinks.put("4", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
+		imageLinks.put("5", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
+		imageLinks.put("6", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
+		imageLinks.put("7", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
+		imageLinks.put("8", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
+		imageLinks.put("9", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
+		imageLinks.put("10", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
+	}
 	@Autowired
 	DiscoveryClient discoveryClient;
 
 	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
 	public Image getImage(@PathVariable String id) throws IOException {
-
-		//Read the image from file
-		File imageFile = new File(generateAbsolutePath(id));
-		FileInputStream imageInFile = new FileInputStream(imageFile);
-		byte imageData[] = new byte[(int) imageFile.length()];
-		imageInFile.read(imageData);
-		imageInFile.close();
-
-		//Encode the image and send it back
-		Image image = new Image();
-		image.setImage(encodeImage(imageData));
-		return image;
+		String imageLink = imageLinks.get(id);
+		if(imageLink == null)
+			imageLink = DEFAULT_IMAGE_LINK;
+		return new Image(imageLink);
 	}
 
+	@RequestMapping(value = "/latest/{n}", method = RequestMethod.GET)
+	public ImageList getImageList(@PathVariable Integer n) throws IOException {
+		List<Image> imageList = new ArrayList<Image>();
+		for(int i = 1; i <= n; i++) {
+			imageList.add(new Image(imageLinks.get(String.valueOf(i))));
+		}
+		return new ImageList(imageList);
+	}
+
+	
 	@RequestMapping(value = "/add/{id}", method = RequestMethod.POST)
 	public void addImage(@PathVariable String id,
 			@RequestBody String incomingImage) throws IOException {
