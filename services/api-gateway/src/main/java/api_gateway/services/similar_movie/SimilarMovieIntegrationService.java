@@ -1,5 +1,8 @@
 package api_gateway.services.similar_movie;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -27,8 +30,8 @@ public class SimilarMovieIntegrationService {
         };
     }
 	
-	 @HystrixCommand(fallbackMethod = "stubSimilarMovie")
-	    public Observable<SimilarMovieList> getSimilarMovieList(final Integer n) {
+	 @HystrixCommand(fallbackMethod = "stubSimilarMovieList")
+	    public Observable<SimilarMovieList> getSimilarMovieList(final String n) {
 	        return new ObservableResult<SimilarMovieList>() {
 	            @Override
 	            public SimilarMovieList invoke() {
@@ -45,5 +48,19 @@ public class SimilarMovieIntegrationService {
         stub.setSecondChoice("second choice");
         stub.setThirdChoice("third choice");
         return stub;
+    }
+	
+	private SimilarMovieList stubSimilarMovieList(final String mID) {
+		List<SimilarMovie> list = new ArrayList<SimilarMovie>();
+		for (int i = 1; i <= Integer.parseInt(mID); i++) {
+			SimilarMovie stub = new SimilarMovie();
+			stub.setId(String.valueOf(i));
+			stub.setName("fallback movie");
+			stub.setFirstChoice("Lord of the Rings");
+			stub.setSecondChoice("The Matrix");
+			stub.setThirdChoice("Interstellar");
+			list.add(stub);
+		}
+        return new SimilarMovieList(list);
     }
 }
