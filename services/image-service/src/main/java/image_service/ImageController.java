@@ -28,16 +28,16 @@ public class ImageController {
 	private static final String DEFAULT_IMAGE_LINK = "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg";
 	
 	static {
-		imageLinks.put("1", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
-		imageLinks.put("2", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
-		imageLinks.put("3", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
-		imageLinks.put("4", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
-		imageLinks.put("5", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
-		imageLinks.put("6", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
-		imageLinks.put("7", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
-		imageLinks.put("8", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
-		imageLinks.put("9", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
-		imageLinks.put("10", "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAJ9AAAAJDlkNWY3NWUyLWIwYzMtNDE5Yi1iMjU5LWUzNmY4ODM4MzU0MA.jpg");
+		imageLinks.put("1", "http://ia.media-imdb.com/images/M/MV5BMTQwNTU3MTE4NF5BMl5BanBnXkFtZTcwOTgxNDM2Mg@@._V1_SX300.jpg");
+		imageLinks.put("2", "http://ia.media-imdb.com/images/M/MV5BMTk0MDQ3MzAzOV5BMl5BanBnXkFtZTgwNzU1NzE3MjE@._V1_SX300.jpg");
+		imageLinks.put("3", "http://ia.media-imdb.com/images/M/MV5BMjIwNTYzMzE1M15BMl5BanBnXkFtZTcwOTE5Mzg3OA@@._V1_SX300.jpg");
+		imageLinks.put("4", "http://ia.media-imdb.com/images/M/MV5BMTkxMTA5OTAzMl5BMl5BanBnXkFtZTgwNjA5MDc3NjE@._V1_SX300.jpg");
+		imageLinks.put("5", "http://ia.media-imdb.com/images/M/MV5BMjIyNTQ5NjQ1OV5BMl5BanBnXkFtZTcwODg1MDU4OA@@._V1_SX300.jpg");
+		imageLinks.put("6", "http://ia.media-imdb.com/images/M/MV5BMTI2NTU2Nzc0MV5BMl5BanBnXkFtZTcwMzY1OTM2MQ@@._V1_SX300.jpg");
+		imageLinks.put("7", "http://ia.media-imdb.com/images/M/MV5BMTI2NjUyMDUyMV5BMl5BanBnXkFtZTcwMzU0OTkyMQ@@._V1_SX300.jpg");
+		imageLinks.put("8", "http://ia.media-imdb.com/images/M/MV5BMTQxMTAwMDQ3Nl5BMl5BanBnXkFtZTcwODMwNTgzMQ@@._V1_SX300.jpg");
+		imageLinks.put("9", "http://ia.media-imdb.com/images/M/MV5BMTkxNDYxOTA4M15BMl5BanBnXkFtZTgwNTk0NzQxMTE@._V1_SX300.jpg");
+		imageLinks.put("10", "http://ia.media-imdb.com/images/M/MV5BMTc2MTQ3MDA1Nl5BMl5BanBnXkFtZTgwODA3OTI4NjE@._V1_SX300.jpg");
 	}
 	@Autowired
 	DiscoveryClient discoveryClient;
