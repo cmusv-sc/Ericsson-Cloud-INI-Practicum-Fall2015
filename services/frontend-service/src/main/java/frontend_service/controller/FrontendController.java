@@ -1,5 +1,8 @@
 package frontend_service.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,7 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.DiscoveryClient;
 
 import frontend_service.models.MovieDetails;
+import frontend_service.models.MovieDetailsList;
 
 @Controller
 public class FrontendController {
@@ -19,12 +23,25 @@ public class FrontendController {
 	@Autowired
 	DiscoveryClient discoveryClient;
 
-	@RequestMapping(value = "/movie/{id}", method=RequestMethod.GET)
-	public String index(@PathVariable String id, Model model) {
+//	@RequestMapping(value = "/movie/{id}", method=RequestMethod.GET)
+//	public String index(@PathVariable String id, Model model) {
+//		InstanceInfo gatewayInstance = discoveryClient.getNextServerFromEureka("API-GATEWAY", false);
+//		RestTemplate template = new RestTemplate();
+//		MovieDetails response = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/"+id, MovieDetails.class);	
+//		List<MovieDetails> movies = new ArrayList<>();
+//		movies.add(response);
+//		movies.add(response);
+//		movies.add(response);
+//        model.addAttribute("movies", movies);
+//        return "index";
+//	}
+	
+	@RequestMapping(value = "/movie/list/{n}", method=RequestMethod.GET)
+	public String index(@PathVariable String n, Model model) {
 		InstanceInfo gatewayInstance = discoveryClient.getNextServerFromEureka("API-GATEWAY", false);
 		RestTemplate template = new RestTemplate();
-		MovieDetails response = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/"+id, MovieDetails.class);		
-        model.addAttribute("response", response);
+		MovieDetailsList response = template.getForObject(gatewayInstance.getHomePageUrl()+"/latest/"+ n, MovieDetailsList.class);	
+        model.addAttribute("movies", response.getMovieList());
         return "index";
 	}
 
