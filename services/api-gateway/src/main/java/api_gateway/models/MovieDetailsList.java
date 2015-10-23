@@ -4,13 +4,13 @@ import java.util.List;
 
 public class MovieDetailsList {
 
-	private final List<MovieDetails> movieList;
+	private List<MovieDetails> movie;
 
-	public MovieDetailsList(List<MovieDetails> movieList) {
-		this.movieList = movieList;
+	public List<MovieDetails> getMovie() {
+		return movie;
 	}
 
-	public List<MovieDetails> getMovieList() {
-		return movieList;
+	public void setMovie(List<MovieDetails> movie) {
+		this.movie = movie;
 	}
 }

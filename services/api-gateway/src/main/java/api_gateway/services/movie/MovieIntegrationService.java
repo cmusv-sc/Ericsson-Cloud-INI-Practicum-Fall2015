@@ -36,7 +36,7 @@ public class MovieIntegrationService {
         return new ObservableResult<MovieList>() {
             @Override
             public MovieList invoke() {
-                return restTemplate.getForObject("http://movies/movie/latest/{n}", MovieList.class, n);
+                return restTemplate.getForObject("http://localhost:9090/movie/latest/{n}", MovieList.class, n);
             }
         };
     }
@@ -59,7 +59,9 @@ public class MovieIntegrationService {
 			stub.setName("8IGHT");
 			list.add(stub);
 		}
-		return new MovieList(list);
+		MovieList movieList = new MovieList();
+		movieList.setMovie(list);
+		return movieList;
 	}
 
 }

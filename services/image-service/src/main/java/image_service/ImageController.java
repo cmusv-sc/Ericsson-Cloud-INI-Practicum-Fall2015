@@ -49,12 +49,14 @@ public class ImageController {
 	}
 
 	@RequestMapping(value = "/latest/{n}", method = RequestMethod.GET)
-	public ImageList getImageList(@PathVariable Integer n) throws IOException {
+	public ImageList getImageList(@PathVariable String n) throws IOException {
 		List<Image> imageList = new ArrayList<Image>();
-		for(int i = 1; i <= n; i++) {
+		for(int i = 1; i <= Integer.parseInt(n); i++) {
 			imageList.add(new Image(imageLinks.get(String.valueOf(i))));
 		}
-		return new ImageList(imageList);
+		ImageList list = new ImageList();
+		list.setList(imageList);
+		return list;
 	}
 
 	

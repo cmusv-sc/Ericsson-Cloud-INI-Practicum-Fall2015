@@ -60,6 +60,9 @@ public class SimilarMovieIntegrationService {
 			stub.setThirdChoice("Interstellar");
 			list.add(stub);
 		}
-        return new SimilarMovieList(list);
+		
+		SimilarMovieList similarMovieList = new SimilarMovieList();
+		similarMovieList.setSimilarMovieList(list);
+        return similarMovieList;
     }
 }

@@ -27,13 +27,16 @@ public class RatingController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/latest/{n}")
-	public RatingList getAllRatings(@PathVariable Integer n) {
+	public RatingList getAllRatings(@PathVariable String n) {
 		List<Rating> ratingList = new ArrayList<Rating>();
 		// TODO: Change logic here
-		for (int i = 1; i <= n; i++) {
+		for (int i = 1; i <= Integer.parseInt(n); i++) {
 			ratingList.add(repository.findById(String.valueOf(i)));
 		}
-		return new RatingList(ratingList);
+		
+		RatingList list = new RatingList();
+		list.setList(ratingList);
+		return list;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)

@@ -55,6 +55,9 @@ public class ImageIntegrationService {
 			image.setImage("https://scontent-sjc2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/1780914_683427131804051_7408191191730620890_n.jpg?oh=8a1c0a7b24392fe9bf03be7483985b72&oe=56C52E28");
 			list.add(image);
 		}
-		return new ImageList(list);
+		
+		ImageList imageList = new ImageList();
+		imageList.setList(list);
+		return imageList;
 	}
 }

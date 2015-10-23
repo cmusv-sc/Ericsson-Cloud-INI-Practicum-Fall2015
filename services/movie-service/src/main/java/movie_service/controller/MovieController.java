@@ -27,13 +27,16 @@ public class MovieController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/latest/{n}")
-	public MovieList getAllMovie(@PathVariable Integer n) {
+	public MovieList getAllMovie(@PathVariable String n) {
 		List<Movie> movieList = new ArrayList<Movie>();
 		// TODO: Change logic here
-		for (int i = 1; i <= n; i++) {
+		for (int i = 1; i <= Integer.parseInt(n); i++) {
 			movieList.add(repository.findById(String.valueOf(i)));
 		}
-		return new MovieList(movieList);
+		
+		MovieList movieListObject = new MovieList();
+		movieListObject.setMovie(movieList);
+		return movieListObject;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

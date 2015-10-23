@@ -1,7 +1,9 @@
 package api_gateway.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
+
 
 import rx.Observable;
 import rx.Observer;
@@ -74,29 +77,32 @@ public class GatewayController {
     }
     
     
-    @RequestMapping(value="/latest/{n}", method=RequestMethod.GET)
-    public DeferredResult<MovieDetailsList> getMovieListDetails(@PathVariable String n) { 	
-    	Observable<MovieDetailsList> details = Observable.zip(
-    			movieIntegrationService.getMovieList(n),
-    			ratingIntegrationService.getRatingList(n),
-    			imageIntegrationService.getImageList(n),
-    			similarMovieIntegrationService.getSimilarMovieList(n),
-                (movie, ratings, image, similars) -> {
-                	List<MovieDetails> list = new ArrayList<MovieDetails>();
-                	for(int i = 0; i < Integer.parseInt(n); i++) {
-                		 MovieDetails movieDetails = new MovieDetails();
-                         movieDetails.setMovie(movie.getMovieList().get(i));
-                         movieDetails.setRatings(ratings.getRatingList());
-                         movieDetails.setSimilars(similars.getSimilarMovieList().get(i));
-                         movieDetails.setImage(image.getImageList().get(i));
-                         list.add(movieDetails);
-                	}
-                   
-                    return new MovieDetailsList(list);
-                }
-            );
-        return toDeferredListResult(details);
-    }
+	@RequestMapping(value = "/latest/{n}", method = RequestMethod.GET)
+	public DeferredResult<MovieDetailsList> getMovieListDetails(
+			@PathVariable String n) {
+
+		Observable<MovieDetailsList> details = Observable.zip(
+				movieIntegrationService.getMovieList(n),
+				ratingIntegrationService.getRatingList(n),
+				imageIntegrationService.getImageList(n),
+				similarMovieIntegrationService.getSimilarMovieList(n), (movie,
+						ratings, image, similars) -> {
+					List<MovieDetails> list = new ArrayList<MovieDetails>();
+					for (int i = 0; i < Integer.parseInt(n); i++) {
+						MovieDetails movieDetails = new MovieDetails();
+						movieDetails.setMovie(movie.getMovie().get(i));
+						movieDetails.setRatings(ratings.getRatingList());
+						movieDetails.setSimilars(similars.getSimilarMovieList().get(i));
+						movieDetails.setImage(image.getList().get(i));
+						list.add(movieDetails);
+					}
+					MovieDetailsList movieDetailsList = new MovieDetailsList();
+					movieDetailsList.setMovie(list);
+					return movieDetailsList;
+				});
+
+		return toDeferredListResult(details);
+	}
 
     public DeferredResult<MovieDetailsList> toDeferredListResult(Observable<MovieDetailsList> details) {
         DeferredResult<MovieDetailsList> result = new DeferredResult<>();

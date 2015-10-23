@@ -60,6 +60,9 @@ public class RatingIntegrationService {
 			rating.setUserId("1");
 			list.add(rating);
 		}
-		return new RatingList(list);
+		
+		RatingList ratingList = new RatingList();
+		ratingList.setRatingList(list);
+		return ratingList;
 	}
 }

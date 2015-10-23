@@ -27,13 +27,15 @@ public class SimilarMovieController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/latest/{n}")
-	public SimilarMovieList getAllRatings(@PathVariable Integer n) {
+	public SimilarMovieList getAllRatings(@PathVariable String n) {
 		List<SimilarMovie> similarMovieList = new ArrayList<SimilarMovie>();
 		// TODO: Change logic here
-		for (int i = 1; i <= n; i++) {
+		for (int i = 1; i <= Integer.parseInt(n); i++) {
 			similarMovieList.add(repository.findById(String.valueOf(i)));
 		}
-		return new SimilarMovieList(similarMovieList);
+		SimilarMovieList list = new SimilarMovieList();
+		list.setSimilarMovieList(similarMovieList);
+		return list;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
