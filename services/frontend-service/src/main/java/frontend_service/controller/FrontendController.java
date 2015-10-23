@@ -41,7 +41,7 @@ public class FrontendController {
 		InstanceInfo gatewayInstance = discoveryClient.getNextServerFromEureka("API-GATEWAY", false);
 		RestTemplate template = new RestTemplate();
 		MovieDetailsList response = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/latest/"+ n, MovieDetailsList.class);	
-        model.addAttribute("movies", response.getMovieList());
+        model.addAttribute("movies", response.getMovie());
         return "index";
 	}
 
