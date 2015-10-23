@@ -4,14 +4,13 @@ import java.util.List;
 
 public class RatingList {
 
-	private List<Rating> ratingList;
+	private List<Rating> list;
 
-	public List<Rating> getRatingList() {
-		return ratingList;
+	public List<Rating> getList() {
+		return list;
 	}
 
-	public void setRatingList(List<Rating> ratingList) {
-		this.ratingList = ratingList;
+	public void setList(List<Rating> list) {
+		this.list = list;
 	}
-
 }
