@@ -2,16 +2,21 @@ import java.util.List;
 
 public class MovieLensDataIngester {
 
+	private static final String MOVIE_DATA_FILE_PATH = "/Users/mayank/Downloads/ml-100k/u.item";
+	private static final String RATING_DATA_FILE_PATH = "/Users/mayank/Downloads/ml-100k/u.data";
+	
 	public static void main(String[] args) throws Exception {
-		if (args == null || args.length == 0)
-			throw new IllegalArgumentException("Please provide the input file");
 
-		String inputFileName = args[0];
-
-		MovieLensDataSetParser parser = new MovieLensDataSetParser(inputFileName);
-		List<Movie> movies = parser.getMoviesList();
+		MovieDataParser movieParser = new MovieDataParser(MOVIE_DATA_FILE_PATH);
+		List<Movie> movieList = movieParser.getMoviesList();
 
 		//TODO: Put the movies into MongoDB
-		System.out.println(movies.get(1).toString());
+		System.out.println(movieList.get(0).toString());
+		
+		RatingParser ratingParser = new RatingParser(RATING_DATA_FILE_PATH);
+		List<Rating> ratingList = ratingParser.getRatingList();
+		
+		//TODO: Put the ratings into MongoDB
+		System.out.println("\n" + ratingList.get(0).toString());
 	}
 }
