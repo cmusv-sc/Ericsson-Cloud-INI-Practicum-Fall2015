@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
 
-import api_gateway.services.similar_movie.models.SimilarMovie;
+import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovie;
 import rx.Observable;
 
 @Service

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import movie_service.domain.Movie;
+import edu.cmu.ini.ericsson.practicum.models.movieService.Movie;
 import movie_service.domain.MovieRepository;
 
 @RestController

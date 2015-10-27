@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.netflix.discovery.DiscoveryClient;
 
+import edu.cmu.ini.ericsson.practicum.models.imageService.Image;
+
 @RestController
 public class ImageController {
 

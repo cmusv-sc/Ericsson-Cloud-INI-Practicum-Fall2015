@@ -10,9 +10,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
+
+import edu.cmu.ini.ericsson.practicum.models.ratingsService.Rating;
+
 import org.springframework.http.HttpMethod;
 
-import api_gateway.services.ratings.models.Rating;
 import rx.Observable;
 
 @Service

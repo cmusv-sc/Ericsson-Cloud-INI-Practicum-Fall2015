@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-import ratings_service.domain.Rating;
+import edu.cmu.ini.ericsson.practicum.models.ratingsService.Rating;
 import ratings_service.domain.RatingRepository;
 
 @SpringBootApplication

@@ -1,11 +1,12 @@
-package api_gateway.models;
+package edu.cmu.ini.ericsson.practicum.models.apiGatewayService;
 
 import java.util.List;
 
-import api_gateway.services.images.models.Image;
-import api_gateway.services.movie.models.Movie;
-import api_gateway.services.ratings.models.Rating;
-import api_gateway.services.similar_movie.models.SimilarMovie;
+import edu.cmu.ini.ericsson.practicum.models.imageService.Image;
+import edu.cmu.ini.ericsson.practicum.models.movieService.Movie;
+import edu.cmu.ini.ericsson.practicum.models.ratingsService.Rating;
+import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovie;
+
 
 public class MovieDetails {
 	private Image image;
