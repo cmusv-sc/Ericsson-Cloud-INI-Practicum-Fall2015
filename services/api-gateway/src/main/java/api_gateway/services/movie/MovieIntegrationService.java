@@ -29,9 +29,19 @@ public class MovieIntegrationService {
 
     private Movie stubMovie(final String mID) {
         Movie stub = new Movie();
-        stub.setReleaseDate("01-Jan-2001");
-        stub.setImdbUrl("www.imdb.com");
-        stub.setName("Default Movie");
+		stub.setCast(null);
+		stub.setCountry("");
+		stub.setDirector("");
+		stub.setFullplot("");
+		stub.setGenre(null);
+		stub.setImdbid("");
+		stub.setLanguage("");
+		stub.setPlot("");
+		stub.setPoster(null);
+		stub.setRuntime("");
+		stub.setTitle("Default Movie");
+		stub.setWriter("");
+		stub.setYear("");
         return stub;
     }
 
