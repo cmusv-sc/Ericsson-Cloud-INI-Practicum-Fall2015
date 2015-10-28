@@ -1,8 +1,6 @@
-package image_service;
+package edu.cmu.ini.ericsson.practicum.models.imageService;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Image {
 
 	private String image;

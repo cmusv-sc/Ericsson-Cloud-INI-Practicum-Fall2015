@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.DiscoveryClient;
 
-import frontend_service.models.MovieDetails;
+import edu.cmu.ini.ericsson.practicum.models.apiGatewayService.MovieDetails;
 
 @Controller
 public class FrontendController {

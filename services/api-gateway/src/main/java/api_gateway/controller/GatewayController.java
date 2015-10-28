@@ -9,11 +9,11 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import rx.Observable;
 import rx.Observer;
-import api_gateway.models.MovieDetails;
 import api_gateway.services.images.ImageIntegrationService;
 import api_gateway.services.movie.MovieIntegrationService;
 import api_gateway.services.ratings.RatingIntegrationService;
 import api_gateway.services.similar_movie.SimilarMovieIntegrationService;
+import edu.cmu.ini.ericsson.practicum.models.apiGatewayService.MovieDetails;
 
 @RestController
 @RequestMapping("/movie")

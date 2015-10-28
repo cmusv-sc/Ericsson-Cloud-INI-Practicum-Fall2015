@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import similar_movie_service.domain.SimilarMovie;
+import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovie;
 import similar_movie_service.domain.SimilarMovieRepository;
 
 @RestController

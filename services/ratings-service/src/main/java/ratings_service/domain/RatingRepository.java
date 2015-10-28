@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import edu.cmu.ini.ericsson.practicum.models.ratingsService.Rating;
+
 
 public interface RatingRepository extends MongoRepository<Rating, String> {
 

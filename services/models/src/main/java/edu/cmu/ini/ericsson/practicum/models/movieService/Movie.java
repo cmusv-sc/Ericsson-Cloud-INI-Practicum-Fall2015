@@ -1,9 +1,13 @@
-package movie_service.domain;
+package edu.cmu.ini.ericsson.practicum.models.movieService;
 
 import org.springframework.data.annotation.Id;
 
 public class Movie {
 
+//	['id', 'imdbid', 'title', 'year', 'rating', 'runtime', 'genre', 'released', 'director', 'writer',
+//	 'cast', 'metacritic', 'imdbrating', 'imdbvotes', 'poster', 'plot', 'fullplot', 'language', 'country', 'awards', 'lastupdated', 'type']
+//
+//	
 	@Id
 	private String id;
 	private String name;
