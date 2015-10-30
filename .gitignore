@@ -22,6 +22,8 @@ target/
 mvnw
 mvnw.cmd
 *.log
+./services/user-service/target/
+
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
