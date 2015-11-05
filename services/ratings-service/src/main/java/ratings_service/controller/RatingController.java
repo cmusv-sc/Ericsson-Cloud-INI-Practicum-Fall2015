@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ratings_service.domain.Rating;
+import edu.cmu.ini.ericsson.practicum.models.ratingsService.Rating;
 import ratings_service.domain.RatingRepository;
 
 @RestController

@@ -10,10 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import rx.Observable;
-import api_gateway.services.images.models.Image;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
+
+import edu.cmu.ini.ericsson.practicum.models.imageService.Image;
 
 @Service
 public class ImageIntegrationService {

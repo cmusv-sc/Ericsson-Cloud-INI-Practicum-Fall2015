@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-import similar_movie_service.domain.SimilarMovie;
+import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovie;
 import similar_movie_service.domain.SimilarMovieRepository;
 
 @EnableEurekaClient
