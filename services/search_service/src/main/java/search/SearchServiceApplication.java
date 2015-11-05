@@ -1,12 +1,17 @@
 package search;
 
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.store.RAMDirectory;
+import org.apache.lucene.util.Version;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
+import search.api.MovieSuggestion;
 import search.domain.*;
+
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -21,5 +26,8 @@ public class SearchServiceApplication implements CommandLineRunner{
     @Override
 	public void run(String... arg0) throws Exception {
     	repository.save(new MovieSearch("1", "God Father", "1972", "Francis Ford Coppola", "Al Pacino"));
+        RAMDirectory index_dir = new RAMDirectory();
+        StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_48);
+        MovieSuggestion suggestion = new MovieSuggestion(index_dir, Version.LUCENE_48, "omdbClean.txt");
     }
 }

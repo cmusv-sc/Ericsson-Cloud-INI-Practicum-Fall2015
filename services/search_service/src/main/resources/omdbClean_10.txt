@@ -1,0 +1,9 @@
+1	Carmencita	NOT RATED	William K.L. Dickson	Carmencita	movie
+2	Le clown et ses chiens		Émile Reynaud		movie
+3	Pauvre Pierrot		Émile Reynaud		movie
+4	Un bon bock		Émile Reynaud		movie
+5	Blacksmith Scene	UNRATED	William K.L. Dickson	Charles Kayser, John Ott	movie
+6	Chinese Opium Den		William K.L. Dickson		movie
+7	Corbett and Courtney Before the Kinetograph	NOT RATED	William K.L. Dickson, William Heise	James J. Corbett, Peter Courtney	movie
+8	Edison Kinetoscopic Record of a Sneeze		William K.L. Dickson	Fred Ott	movie
+9	Miss Jerry		Alexander Black	Blanche Bayliss, William Courtenay, Chauncey Depew	movie
