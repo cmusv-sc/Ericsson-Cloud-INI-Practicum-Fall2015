@@ -5,6 +5,14 @@ import java.util.List;
 public class MovieList {
 
 	private List<Movie> movie;
+	
+	public MovieList() {
+		
+	}
+	
+	public MovieList(List<Movie> movie) {
+		this.movie = movie;
+	}
 
 	public List<Movie> getMovie() {
 		return movie;
