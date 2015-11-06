@@ -13,6 +13,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
 
 import edu.cmu.ini.ericsson.practicum.models.movieService.Movie;
+import edu.cmu.ini.ericsson.practicum.models.movieService.MovieList;
 import rx.Observable;
 
 @Service
@@ -64,9 +65,19 @@ public class MovieIntegrationService {
 
 		for (int i = 1; i <= Integer.parseInt(mID); i++) {
 			Movie stub = new Movie();
-			stub.setDataReleased("01-Jan-2001");
-			stub.setImdbURI("www.imdb.com");
-			stub.setName("8IGHT");
+			stub.setCast(null);
+			stub.setCountry("");
+			stub.setDirector("");
+			stub.setFullplot("");
+			stub.setGenre(null);
+			stub.setImdbid("");
+			stub.setLanguage("");
+			stub.setPlot("");
+			stub.setPoster(null);
+			stub.setRuntime("");
+			stub.setTitle("Default Movie");
+			stub.setWriter("");
+			stub.setYear("");
 			list.add(stub);
 		}
 		MovieList movieList = new MovieList();

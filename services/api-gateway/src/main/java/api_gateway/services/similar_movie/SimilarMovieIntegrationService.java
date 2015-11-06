@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import rx.Observable;
-
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
 
 import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovie;
+import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovieList;
 import rx.Observable;
 
 @Service

@@ -16,6 +16,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
 
 import edu.cmu.ini.ericsson.practicum.models.ratingsService.Rating;
+import edu.cmu.ini.ericsson.practicum.models.ratingsService.RatingList;
 
 import org.springframework.http.HttpMethod;
 

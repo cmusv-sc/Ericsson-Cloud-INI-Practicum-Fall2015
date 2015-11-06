@@ -14,6 +14,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
 
 import edu.cmu.ini.ericsson.practicum.models.imageService.Image;
+import edu.cmu.ini.ericsson.practicum.models.imageService.ImageList;
 
 @Service
 public class ImageIntegrationService {

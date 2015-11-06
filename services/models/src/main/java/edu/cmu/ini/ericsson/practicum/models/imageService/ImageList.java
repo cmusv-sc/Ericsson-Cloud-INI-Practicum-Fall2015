@@ -1,4 +1,4 @@
-package image_service;
+package edu.cmu.ini.ericsson.practicum.models.imageService;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package api_gateway.service.user;
+package api_gateway.services.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

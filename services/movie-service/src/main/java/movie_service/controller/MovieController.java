@@ -3,8 +3,6 @@ package movie_service.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import movie_service.domain.Movie;
-import movie_service.domain.MovieList;
 import movie_service.domain.MovieRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import edu.cmu.ini.ericsson.practicum.models.movieService.Movie;
+import edu.cmu.ini.ericsson.practicum.models.movieService.MovieList;
 
 @RestController
 @RequestMapping("/movie")
@@ -47,9 +48,19 @@ public class MovieController {
 	@RequestMapping(method = RequestMethod.PUT, value = "{id}")
 	public Movie updateMovie(@PathVariable String id, @RequestBody Movie movie) {
 		Movie update = repository.findOne(id);
-		update.setImdbURI(movie.getImdbURI());
-		update.setName(movie.getName());
-		update.setDataReleased(movie.getDataReleased());
+		update.setCast(movie.getCast());
+		update.setCountry(movie.getCountry());
+		update.setDirector(movie.getDirector());
+		update.setFullplot(movie.getFullplot());
+		update.setGenre(movie.getGenre());
+		update.setImdbid(movie.getImdbid());
+		update.setLanguage(movie.getLanguage());
+		update.setPlot(movie.getPlot());
+		update.setPoster(movie.getPoster());
+		update.setRuntime(movie.getRuntime());
+		update.setTitle(movie.getTitle());
+		update.setWriter(movie.getWriter());
+		update.setYear(movie.getYear());
 		return repository.save(update);
 	}
 

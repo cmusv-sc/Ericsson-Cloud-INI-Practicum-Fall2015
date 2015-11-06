@@ -1,5 +1,4 @@
-package similar_movie_service.domain;
-
+package edu.cmu.ini.ericsson.practicum.models.similarMovieService;
 import java.util.List;
 
 public class SimilarMovieList {

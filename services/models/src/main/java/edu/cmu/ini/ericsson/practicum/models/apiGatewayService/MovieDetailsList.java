@@ -1,4 +1,4 @@
-package api_gateway.models;
+package edu.cmu.ini.ericsson.practicum.models.apiGatewayService;
 
 import java.util.List;
 

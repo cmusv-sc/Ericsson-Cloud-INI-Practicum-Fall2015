@@ -2,9 +2,6 @@ package similar_movie_service.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import movie_service.domain.Movie;
-import movie_service.domain.MovieList;
 import movie_service.domain.MovieRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovie;
-import similar_movie_service.domain.SimilarMovie;
-import similar_movie_service.domain.SimilarMovieList;
+import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovieList;
 import similar_movie_service.domain.SimilarMovieRepository;
 
 @RestController

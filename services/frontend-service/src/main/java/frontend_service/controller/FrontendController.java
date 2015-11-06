@@ -18,6 +18,7 @@ import com.netflix.discovery.DiscoveryClient;
 
 import edu.cmu.ini.ericsson.practicum.models.apiGatewayService.MovieDetails;
 import edu.cmu.ini.ericsson.practicum.models.userService.User;
+import edu.cmu.ini.ericsson.practicum.models.apiGatewayService.MovieDetailsList;
 
 
 @Controller

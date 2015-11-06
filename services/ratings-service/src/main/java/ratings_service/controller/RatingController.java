@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.cmu.ini.ericsson.practicum.models.ratingsService.Rating;
+import edu.cmu.ini.ericsson.practicum.models.ratingsService.RatingList;
 import ratings_service.domain.RatingRepository;
 
 @RestController
