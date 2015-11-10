@@ -33,11 +33,20 @@ public class FrontendController {
 	}
 
 	@RequestMapping(value = "/movie/list/{n}", method=RequestMethod.GET)
-	public String index(@PathVariable String n, Model model) {
+	public String index(@PathVariable String n,
+						@RequestParam("uid") String userId,
+						@RequestParam("pwd") String pwd,
+						Model model) {
 		InstanceInfo gatewayInstance = discoveryClient.getNextServerFromEureka("API-GATEWAY", false);
 		RestTemplate template = new RestTemplate();
-		MovieDetailsList response = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/latest/"+ n, MovieDetailsList.class);	
-        model.addAttribute("movies", response.getMovie());
-        return "index";
+		User user = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/user/"+userId, User.class);
+		if (user.getPassword().equals(pwd)) {
+			MovieDetailsList response = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/latest/"+ n, MovieDetailsList.class);	
+	        model.addAttribute("movies", response.getMovie());
+	        model.addAttribute("user", user);
+	        return "index";
+		} else {
+			return "login";
+		}
 	}
 }

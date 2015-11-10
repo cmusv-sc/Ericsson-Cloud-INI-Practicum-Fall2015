@@ -6,6 +6,10 @@ public class MovieDetailsList {
 
 	private List<MovieDetails> movie;
 	
+	public MovieDetailsList() {
+		
+	}
+	
 	public MovieDetailsList(List<MovieDetails> movie) {
 		this.movie = movie;
 	}

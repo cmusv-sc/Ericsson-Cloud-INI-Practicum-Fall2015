@@ -47,7 +47,7 @@
 		    <div class="thumbnail">
 		      <img style="height: 200px; width: 200px; display: block;" th:src="${movie.image.image}"/>
 		      <div class="caption">
-		        <h3 th:text="${movie.movie.name}"></h3>
+		        <!--<h3 th:text="${movie.movie.title}"></h3> -->
 				<div th:each="rating,iterationStatus : ${movie.ratings}">
 					<p th:text="'User '+ ${rating.userId} + ' rates this movie ' +${rating.rating}"></p>
 				</div>
