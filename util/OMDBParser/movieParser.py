@@ -19,8 +19,8 @@ def load_movies():
         break
     count = 0
     for line in fp:
-        try:
-            data = [value.strip() for value in line.split('\t')]
+        data = [value.strip() for value in line.split('\t')]
+        if keys.__len__ == data.__len__:
             di = dict(zip(keys, data))
             di = {required_key: di[required_key] for required_key in required_keys}
             di = dict((key, None) if value.strip() == "" else (key, value.decode('utf8', 'ignore')) for key, value in di.iteritems())
@@ -41,10 +41,7 @@ def load_movies():
             req.add_header('Content-Type', 'application/json')
             urllib2.urlopen(req, json.dumps(di))
             print str(count) + "/1125135"
-            count += 1
-        except KeyError:
-            print 'oops'
-            continue
+        count += 1
     fp.close()
 
 
