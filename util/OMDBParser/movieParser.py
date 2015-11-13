@@ -20,7 +20,7 @@ def load_movies():
     count = 0
     for line in fp:
         data = [value.strip() for value in line.split('\t')]
-        if data.__len__ < required_key.__len__:
+        if data.__len__ < keys.__len__:
             di = dict(zip(keys, data))
             di = {required_key: di[required_key] for required_key in required_keys}
             di = dict((key, None) if value.strip() == "" else (key, value.decode('utf8', 'ignore')) for key, value in di.iteritems())
