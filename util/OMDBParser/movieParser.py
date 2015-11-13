@@ -1,7 +1,7 @@
 import urllib2
 import json
 
-MOVIE_FILE = "/home/abhishek/code/Practicum/omdbFull0815/omdbFull.txt"
+MOVIE_FILE = "/Users/evan/Downloads/omdbFull0815/omdbFull.txt"
 MOVIE_SERVICE_URL = "http://localhost:5050/movie/"
 
 def load_movies():
@@ -16,7 +16,7 @@ def load_movies():
         keys = [key.lower().strip() for key in line.split('\t')]
         print keys
         break
-
+    count = 0
     for line in fp:
         data = [value.strip() for value in line.split('\t')]
         di = dict(zip(keys, data))
@@ -32,13 +32,14 @@ def load_movies():
         if di['imdbrating']:
             di['imdbrating'] = float(di['imdbrating'])
 
-        di['omdbid'] = di['id']
-        di.pop('id')
-
+        #di['omdbid'] = di['id']
+        #di.pop('id')
+        #print json.dumps(di)
         req = urllib2.Request(MOVIE_SERVICE_URL)
         req.add_header('Content-Type', 'application/json')
-
         urllib2.urlopen(req, json.dumps(di))
+        print str(count) + "/1125135"
+        count += 1
 
     fp.close()
 
