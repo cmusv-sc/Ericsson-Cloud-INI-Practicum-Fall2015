@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,7 @@ import api_gateway.services.ratings.RatingIntegrationService;
 import api_gateway.services.similar_movie.SimilarMovieIntegrationService;
 import edu.cmu.ini.ericsson.practicum.models.apiGatewayService.MovieDetails;
 import edu.cmu.ini.ericsson.practicum.models.apiGatewayService.MovieDetailsList;
+import edu.cmu.ini.ericsson.practicum.models.movieService.Movie;
 import edu.cmu.ini.ericsson.practicum.models.userService.User;
 
 @RestController
@@ -79,6 +81,11 @@ public class GatewayController {
         });
         return result;
     }
+    
+    @RequestMapping(method = RequestMethod.POST)
+	public Movie postMovie(@RequestBody Movie movie) {
+		return movieIntegrationService.postMovie(movie);
+	}
     
     @RequestMapping(value="/user/{mID}", method=RequestMethod.GET)
     public DeferredResult<User> getUser(@PathVariable String mID) {

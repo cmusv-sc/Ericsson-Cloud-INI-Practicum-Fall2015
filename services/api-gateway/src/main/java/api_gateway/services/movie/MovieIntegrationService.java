@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
 import rx.Observable;
@@ -31,6 +34,11 @@ public class MovieIntegrationService {
             }
         };
     }
+	
+	@HystrixCommand(fallbackMethod = "stubPostMovie")
+	public Movie postMovie(Movie movie) {
+		return restTemplate.postForObject("http://movies/movie", movie, Movie.class);
+	}
 
 	@HystrixCommand(fallbackMethod = "stubMovieList")
     public Observable<MovieList> getMovieList(final String n) {
@@ -41,6 +49,10 @@ public class MovieIntegrationService {
             }
         };
     }
+	
+	private Movie stubPostMovie(Movie movie) {
+		return movie;
+	}
 	
     private Movie stubMovie(final String mID) {
         Movie stub = new Movie();
