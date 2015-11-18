@@ -45,7 +45,7 @@
 	    <div th:each="movie : ${movies}">	
 		  <div class="col-sm-6 col-md-4">
 		    <div class="thumbnail">
-		      <img style="height: 200px; width: 200px; display: block;" th:src="${movie.image.image}"/>
+		      <img style="height: 200px; width: 200px; display: block;" th:src="${movie.movie.poster}"/>
 		      <div class="caption">
 		        <!--<h3 th:text="${movie.movie.title}"></h3> -->
 				<div th:each="rating,iterationStatus : ${movie.ratings}">

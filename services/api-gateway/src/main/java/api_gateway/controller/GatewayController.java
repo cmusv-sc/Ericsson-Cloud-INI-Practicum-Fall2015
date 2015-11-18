@@ -36,9 +36,6 @@ public class GatewayController {
     RatingIntegrationService ratingIntegrationService;
 
     @Autowired
-    ImageIntegrationService imageIntegrationService;
-
-    @Autowired
     SimilarMovieIntegrationService similarMovieIntegrationService;
     
     @Autowired
@@ -49,14 +46,12 @@ public class GatewayController {
         Observable<MovieDetails> details = Observable.zip(
 			movieIntegrationService.getMovie(mID),
 			ratingIntegrationService.ratingFor(mID),
-			imageIntegrationService.imageFor(mID),
 			similarMovieIntegrationService.getSimilarMovie(mID),
-            (movie, ratings, image, similars) -> {
+            (movie, ratings, similars) -> {
                 MovieDetails movieDetails = new MovieDetails();
                 movieDetails.setMovie(movie);
                 movieDetails.setRatings(ratings);
                 movieDetails.setSimilars(similars);
-                movieDetails.setImage(image);
                 return movieDetails;
             }
         );
@@ -116,16 +111,14 @@ public class GatewayController {
     	Observable<MovieDetailsList> details = Observable.zip(
     			movieIntegrationService.getMovieList(n),
     			ratingIntegrationService.getRatingList(n),
-    			imageIntegrationService.getImageList(n),
     			similarMovieIntegrationService.getSimilarMovieList(n),
-                (movie, ratings, image, similars) -> {
+                (movie, ratings, similars) -> {
                 	List<MovieDetails> list = new ArrayList<MovieDetails>();
                 	for(int i = 0; i < Integer.parseInt(n); i++) {
                 		 MovieDetails movieDetails = new MovieDetails();
                          movieDetails.setMovie(movie.getMovie().get(i));
                          movieDetails.setRatings(ratings.getList().get(i));
                          movieDetails.setSimilars(similars.getSimilarMovieList().get(i));
-                         movieDetails.setImage(image.getList().get(i));
                          list.add(movieDetails);
                 	}
                    

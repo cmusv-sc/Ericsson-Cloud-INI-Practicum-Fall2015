@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+import edu.cmu.ini.ericsson.practicum.models.imageService.Image;
 import edu.cmu.ini.ericsson.practicum.models.movieService.Movie;
 import edu.cmu.ini.ericsson.practicum.models.movieService.MovieList;
 
@@ -21,10 +23,16 @@ public class MovieController {
 
 	@Autowired
 	private MovieRepository repository;
+	
+	@Autowired
+    RestTemplate restTemplate;
 
 	@RequestMapping(method = RequestMethod.GET, value = "{id}")
 	public Movie getMovie(@PathVariable String id) {
-		return repository.findById(id);
+		Movie movie = repository.findById(id);
+		Image image = restTemplate.getForObject("http://images/image/get/{id}", Image.class, id);
+		movie.setPoster(image.getImage());
+		return movie;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/latest/{n}")
