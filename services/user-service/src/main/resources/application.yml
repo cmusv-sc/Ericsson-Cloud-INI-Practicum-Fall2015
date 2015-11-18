@@ -1,5 +1,5 @@
 server:
-  port: ${SERVICE_PORT:80}
+  port: ${SERVICE_PORT:9091}
 
 eureka:
   client:
@@ -11,4 +11,4 @@ eureka:
 
 spring:
   application:
-    name: api-gateway
+    name: user-service

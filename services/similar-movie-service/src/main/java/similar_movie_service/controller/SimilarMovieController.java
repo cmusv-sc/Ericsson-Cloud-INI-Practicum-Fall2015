@@ -1,5 +1,8 @@
 package similar_movie_service.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.cmu.ini.ericsson.practicum.models.movieService.Movie;
+import edu.cmu.ini.ericsson.practicum.models.movieService.MovieList;
 import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovie;
+import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovieList;
 import similar_movie_service.domain.SimilarMovieRepository;
 
 @RestController
@@ -37,6 +43,16 @@ public class SimilarMovieController {
 	    return repository.save(update);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/latest/{n}")
+	public SimilarMovieList getAllMovie(@PathVariable Integer n) {
+		List<SimilarMovie> movieList = new ArrayList<SimilarMovie>();
+		// TODO: Change logic here
+		for (int i = 1; i <= n; i++) {
+			movieList.add(repository.findById(String.valueOf(i)));
+		}
+		return new SimilarMovieList(movieList);
+	}
+	
 	@RequestMapping(method=RequestMethod.DELETE, value="{id}")
 	public void deleteMovie(@PathVariable String id) {
 		repository.delete(id);

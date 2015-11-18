@@ -1,5 +1,8 @@
 package frontend_service.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,36 +15,38 @@ import org.springframework.web.client.RestTemplate;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.DiscoveryClient;
 
+
 import edu.cmu.ini.ericsson.practicum.models.apiGatewayService.MovieDetails;
 import edu.cmu.ini.ericsson.practicum.models.userService.User;
+import edu.cmu.ini.ericsson.practicum.models.apiGatewayService.MovieDetailsList;
+
 
 @Controller
 public class FrontendController {
-	
+
 	@Autowired
 	DiscoveryClient discoveryClient;
 
-	@RequestMapping(value = "/movie/{id}", method=RequestMethod.GET)
-	public String index(@PathVariable String id, 
-			@RequestParam("uid") String userId,
-			@RequestParam("pwd") String pwd,
-			Model model) {
+	@RequestMapping(value = "/login", method=RequestMethod.GET)
+	public String login(Model model) {
+		return "login";
+	}
+
+	@RequestMapping(value = "/movie/list/{n}", method=RequestMethod.GET)
+	public String index(@PathVariable String n,
+						@RequestParam("uid") String userId,
+						@RequestParam("pwd") String pwd,
+						Model model) {
 		InstanceInfo gatewayInstance = discoveryClient.getNextServerFromEureka("API-GATEWAY", false);
 		RestTemplate template = new RestTemplate();
 		User user = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/user/"+userId, User.class);
-		System.out.println(user);
 		if (user.getPassword().equals(pwd)) {
-			MovieDetails response = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/"+id, MovieDetails.class);		
-	        model.addAttribute("response", response);
+			MovieDetailsList response = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/latest/"+ n, MovieDetailsList.class);	
+	        model.addAttribute("movies", response.getMovie());
 	        model.addAttribute("user", user);
 	        return "index";
 		} else {
 			return "login";
 		}
-	}
-	
-	@RequestMapping(value = "/login", method=RequestMethod.GET)
-	public String login(Model model) {
-		return "login";
 	}
 }

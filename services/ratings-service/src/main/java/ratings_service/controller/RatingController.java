@@ -1,5 +1,6 @@
 package ratings_service.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.cmu.ini.ericsson.practicum.models.ratingsService.Rating;
+import edu.cmu.ini.ericsson.practicum.models.ratingsService.RatingList;
 import ratings_service.domain.RatingRepository;
 
 @RestController
-@RequestMapping("movie")
+@RequestMapping("/movie")
 public class RatingController {
 
 	@Autowired
@@ -22,6 +24,19 @@ public class RatingController {
 	@RequestMapping(value = "{id}", method=RequestMethod.GET)
 	public List<Rating> getRatingForMovie(@PathVariable String id){
 		return repository.findByMovieId(id);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/latest/{n}")
+	public RatingList getAllRatings(@PathVariable String n) {
+		List<List<Rating>> ratingList = new ArrayList<List<Rating>>();
+		// TODO: Change logic here
+		for (int i = 1; i <= Integer.parseInt(n); i++) {
+			ratingList.add(repository.findByMovieId(String.valueOf(i)));
+		}
+		
+		RatingList list = new RatingList();
+		list.setList(ratingList);
+		return list;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
