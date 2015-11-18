@@ -28,18 +28,6 @@ public class SimilarMovieController {
 		return repository.findById(id);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/latest/{n}")
-	public SimilarMovieList getAllRatings(@PathVariable String n) {
-		List<SimilarMovie> similarMovieList = new ArrayList<SimilarMovie>();
-		// TODO: Change logic here
-		for (int i = 1; i <= Integer.parseInt(n); i++) {
-			similarMovieList.add(repository.findById(String.valueOf(i)));
-		}
-		SimilarMovieList list = new SimilarMovieList();
-		list.setSimilarMovieList(similarMovieList);
-		return list;
-	}
-	
 	@RequestMapping(method=RequestMethod.POST)
 	public SimilarMovie postMovie(@RequestBody SimilarMovie movie){
 		return repository.save(movie);
