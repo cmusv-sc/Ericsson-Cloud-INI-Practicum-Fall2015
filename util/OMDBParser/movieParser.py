@@ -11,7 +11,7 @@ def load_movies():
                      'plot', 'fullplot', 'language', 'country', 'imdbrating'}
     keys = []
     c = 1
-
+    
     # keys in first line
     for line in fp:
         keys = [key.lower().strip() for key in line.split('\t')]
@@ -42,7 +42,8 @@ def load_movies():
             urllib2.urlopen(req, json.dumps(di))
             print str(count) + "/1125135"
             count += 1
-
+        else:
+            print line
     fp.close()
 
 
