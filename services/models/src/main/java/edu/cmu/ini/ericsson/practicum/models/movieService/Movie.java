@@ -46,6 +46,25 @@ public class Movie {
 		this.imdbrating = imdbrating;
 	}
 
+	public Movie(Movie movie) {
+		this.id = movie.getId();
+		this.omdbid = movie.getOmdbid();
+		this.imdbid = movie.getImdbid();
+		this.title = movie.getTitle();
+		this.year = movie.getYear();
+		this.runtime = movie.getRuntime();
+		this.genre = movie.getGenre();
+		this.director = movie.getDirector();
+		this.writer = movie.getWriter();
+		this.cast = movie.getCast();
+		this.poster = movie.getPoster();
+		this.plot = movie.getPlot();
+		this.fullplot = movie.getFullplot();
+		this.language = movie.getLanguage();
+		this.country = movie.getCountry();
+		this.imdbrating = movie.getImdbrating();
+	}
+	
 	public String getId() {
 		return id;
 	}

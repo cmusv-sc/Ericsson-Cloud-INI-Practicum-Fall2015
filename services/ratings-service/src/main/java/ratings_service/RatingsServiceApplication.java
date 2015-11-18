@@ -1,5 +1,7 @@
 package ratings_service;
 
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +14,9 @@ import ratings_service.domain.RatingRepository;
 @SpringBootApplication
 @EnableEurekaClient
 public class RatingsServiceApplication implements CommandLineRunner {
-
+	
+	static final int USER_NUMBER = 10000;
+	
 	@Autowired
 	private RatingRepository repository;
 	
@@ -23,29 +27,14 @@ public class RatingsServiceApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		repository.deleteAll();
-		repository.save(new Rating("1", "1", "Abhishek", 1));
-		repository.save(new Rating("11", "1", "Yifan", 5));
-		repository.save(new Rating("2", "3", "Mayank", 5));
-		repository.save(new Rating("12", "3", "Alex", 5));
-		repository.save(new Rating("3", "2", "Anshima", 4));
-		repository.save(new Rating("13", "2", "Ruiqi", 4));
-		repository.save(new Rating("4", "4", "Ruiqi", 5));
-		repository.save(new Rating("14", "4", "Yifan", 3));
-		repository.save(new Rating("5", "5", "Abhishek", 1));
-		repository.save(new Rating("15", "5", "Anshima", 5));
-		repository.save(new Rating("6", "6", "Mayank", 5));
-		repository.save(new Rating("16", "6", "Yifan", 5));
-		repository.save(new Rating("7", "7", "Yifan", 4));
-		repository.save(new Rating("17", "7", "Ruiqi", 4));
-		repository.save(new Rating("8", "8", "Abhishek", 2));
-		repository.save(new Rating("18", "8", "Anshima", 4));
-		repository.save(new Rating("9", "9", "Ruiqi", 2));
-		repository.save(new Rating("19", "9", "Alex", 4));
-		repository.save(new Rating("10", "10", "Anshima", 4));
-		repository.save(new Rating("20", "10", "Yifan", 4));
 		
-		for (Rating rating : repository.findAll()) {
-			System.out.println(rating);
+		Random rand = new Random();
+		for (int i=1; i<1125135; i++) {
+			int n = rand.nextInt(USER_NUMBER);
+			int score = rand.nextInt(10) + 1;
+			repository.save(new Rating(String.valueOf(i), String.valueOf(i), String.valueOf(n), score));
+			System.out.println("ratings inserted " + i);
 		}
+		
 	}
 }

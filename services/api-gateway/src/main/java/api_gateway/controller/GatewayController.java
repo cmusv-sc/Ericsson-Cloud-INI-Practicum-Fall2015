@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,7 @@ import api_gateway.services.ratings.RatingIntegrationService;
 import api_gateway.services.similar_movie.SimilarMovieIntegrationService;
 import edu.cmu.ini.ericsson.practicum.models.apiGatewayService.MovieDetails;
 import edu.cmu.ini.ericsson.practicum.models.apiGatewayService.MovieDetailsList;
+import edu.cmu.ini.ericsson.practicum.models.movieService.Movie;
 import edu.cmu.ini.ericsson.practicum.models.userService.User;
 
 @RestController
@@ -34,9 +36,6 @@ public class GatewayController {
     RatingIntegrationService ratingIntegrationService;
 
     @Autowired
-    ImageIntegrationService imageIntegrationService;
-
-    @Autowired
     SimilarMovieIntegrationService similarMovieIntegrationService;
     
     @Autowired
@@ -47,14 +46,12 @@ public class GatewayController {
         Observable<MovieDetails> details = Observable.zip(
 			movieIntegrationService.getMovie(mID),
 			ratingIntegrationService.ratingFor(mID),
-			imageIntegrationService.imageFor(mID),
 			similarMovieIntegrationService.getSimilarMovie(mID),
-            (movie, ratings, image, similars) -> {
+            (movie, ratings, similars) -> {
                 MovieDetails movieDetails = new MovieDetails();
                 movieDetails.setMovie(movie);
                 movieDetails.setRatings(ratings);
                 movieDetails.setSimilars(similars);
-                movieDetails.setImage(image);
                 return movieDetails;
             }
         );
@@ -79,6 +76,11 @@ public class GatewayController {
         });
         return result;
     }
+    
+    @RequestMapping(method = RequestMethod.POST)
+	public Movie postMovie(@RequestBody Movie movie) {
+		return movieIntegrationService.postMovie(movie);
+	}
     
     @RequestMapping(value="/user/{mID}", method=RequestMethod.GET)
     public DeferredResult<User> getUser(@PathVariable String mID) {
@@ -109,16 +111,14 @@ public class GatewayController {
     	Observable<MovieDetailsList> details = Observable.zip(
     			movieIntegrationService.getMovieList(n),
     			ratingIntegrationService.getRatingList(n),
-    			imageIntegrationService.getImageList(n),
     			similarMovieIntegrationService.getSimilarMovieList(n),
-                (movie, ratings, image, similars) -> {
+                (movie, ratings, similars) -> {
                 	List<MovieDetails> list = new ArrayList<MovieDetails>();
                 	for(int i = 0; i < Integer.parseInt(n); i++) {
                 		 MovieDetails movieDetails = new MovieDetails();
                          movieDetails.setMovie(movie.getMovie().get(i));
                          movieDetails.setRatings(ratings.getList().get(i));
                          movieDetails.setSimilars(similars.getSimilarMovieList().get(i));
-                         movieDetails.setImage(image.getList().get(i));
                          list.add(movieDetails);
                 	}
                    
