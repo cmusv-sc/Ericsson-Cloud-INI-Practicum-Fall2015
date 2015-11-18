@@ -9,11 +9,13 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import rx.Observable;
 import rx.Observer;
+import api_gateway.service.user.UserIntegrationService;
 import api_gateway.services.images.ImageIntegrationService;
 import api_gateway.services.movie.MovieIntegrationService;
 import api_gateway.services.ratings.RatingIntegrationService;
 import api_gateway.services.similar_movie.SimilarMovieIntegrationService;
 import edu.cmu.ini.ericsson.practicum.models.apiGatewayService.MovieDetails;
+import edu.cmu.ini.ericsson.practicum.models.userService.User;
 
 @RestController
 @RequestMapping("/movie")
@@ -30,6 +32,9 @@ public class GatewayController {
 
     @Autowired
     SimilarMovieIntegrationService similarMovieIntegrationService;
+    
+    @Autowired
+    UserIntegrationService userIntegrationService;
 
     @RequestMapping(value="{mID}", method=RequestMethod.GET)
     public DeferredResult<MovieDetails> getMovieDetails(@PathVariable String mID) {
@@ -64,6 +69,31 @@ public class GatewayController {
             @Override
             public void onNext(MovieDetails movieDetails) {
                 result.setResult(movieDetails);
+            }
+        });
+        return result;
+    }
+    
+    @RequestMapping(value="/user/{mID}", method=RequestMethod.GET)
+    public DeferredResult<User> getUser(@PathVariable String mID) {
+        Observable<User> user = userIntegrationService.getUser(mID);
+        return toDeferredResultUser(user);
+    }
+
+    public DeferredResult<User> toDeferredResultUser(Observable<User> user) {
+        DeferredResult<User> result = new DeferredResult<>();
+        user.subscribe(new Observer<User>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+            }
+
+            @Override
+            public void onNext(User user) {
+                result.setResult(user);
             }
         });
         return result;
