@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import edu.cmu.ini.ericsson.practicum.models.imageService.Image;
+import edu.cmu.ini.ericsson.practicum.models.imageService.ImageList;
 import edu.cmu.ini.ericsson.practicum.models.movieService.Movie;
 import edu.cmu.ini.ericsson.practicum.models.movieService.MovieList;
 
@@ -38,9 +39,13 @@ public class MovieController {
 	@RequestMapping(method = RequestMethod.GET, value = "/latest/{n}")
 	public MovieList getAllMovie(@PathVariable String n) {
 		List<Movie> movieList = new ArrayList<Movie>();
-		// TODO: Change logic here
+		//call image firstly
+		
+		ImageList imageList = restTemplate.getForObject("http://images/image/latest/{n}", ImageList.class, n);
 		for (int i = 1; i <= Integer.parseInt(n); i++) {
-			movieList.add(repository.findById(String.valueOf(i)));
+			Movie movie = repository.findById(String.valueOf(i));
+			movie.setPoster(imageList.getList().get(i-1).getImage());
+			movieList.add(movie);
 		}
 		
 		MovieList movieListObject = new MovieList();

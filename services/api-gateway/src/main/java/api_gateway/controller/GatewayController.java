@@ -16,7 +16,6 @@ import rx.Observable;
 import rx.Observer;
 import api_gateway.services.user.UserIntegrationService;
 
-import api_gateway.services.images.ImageIntegrationService;
 import api_gateway.services.movie.MovieIntegrationService;
 import api_gateway.services.ratings.RatingIntegrationService;
 import api_gateway.services.similar_movie.SimilarMovieIntegrationService;

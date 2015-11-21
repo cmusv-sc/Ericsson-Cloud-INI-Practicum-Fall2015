@@ -55,7 +55,10 @@ public class ImageController {
 	public ImageList getImageList(@PathVariable String n) throws IOException {
 		List<Image> imageList = new ArrayList<Image>();
 		for(int i = 1; i <= Integer.parseInt(n); i++) {
-			imageList.add(new Image(imageLinks.get(String.valueOf(i))));
+			String imageLink = imageLinks.get(String.valueOf(i));
+			if(imageLink == null)
+				imageLink = DEFAULT_IMAGE_LINK;
+			imageList.add(new Image(imageLink));
 		}
 		ImageList list = new ImageList();
 		list.setList(imageList);

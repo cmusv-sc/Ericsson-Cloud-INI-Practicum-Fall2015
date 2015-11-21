@@ -4,21 +4,21 @@ import java.util.List;
 
 public class MovieDetailsList {
 
-	private List<MovieDetails> movie;
+	public List<MovieDetails> getMovieList() {
+		return movieList;
+	}
+
+	public void setMovieList(List<MovieDetails> movieList) {
+		this.movieList = movieList;
+	}
+
+	private List<MovieDetails> movieList;
 	
 	public MovieDetailsList() {
 		
 	}
 	
-	public MovieDetailsList(List<MovieDetails> movie) {
-		this.movie = movie;
-	}
-	
-	public List<MovieDetails> getMovie() {
-		return movie;
-	}
-
-	public void setMovie(List<MovieDetails> movie) {
-		this.movie = movie;
+	public MovieDetailsList(List<MovieDetails> movieList) {
+		this.movieList = movieList;
 	}
 }
