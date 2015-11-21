@@ -42,7 +42,7 @@ public class FrontendController {
 		User user = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/user/"+userId, User.class);
 		if (user.getPassword().equals(pwd)) {
 			MovieDetailsList response = template.getForObject(gatewayInstance.getHomePageUrl()+"/movie/latest/"+ n, MovieDetailsList.class);	
-	        model.addAttribute("movies", response.getMovie());
+	        model.addAttribute("movies", response.getMovieList());
 	        model.addAttribute("user", user);
 	        return "index";
 		} else {

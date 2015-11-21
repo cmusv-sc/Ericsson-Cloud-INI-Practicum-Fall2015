@@ -48,7 +48,13 @@ public class SimilarMovieController {
 		List<SimilarMovie> movieList = new ArrayList<SimilarMovie>();
 		// TODO: Change logic here
 		for (int i = 1; i <= n; i++) {
-			movieList.add(repository.findById(String.valueOf(i)));
+			SimilarMovie similar = repository.findById(String.valueOf(i));
+			if (similar == null) {
+				similar = new SimilarMovie("6","Seven (Se7en) (1995)", 
+						"Fight Club", "House of Cards", "Gone Girl");
+			}
+			movieList.add(similar);
+			
 		}
 		return new SimilarMovieList(movieList);
 	}
