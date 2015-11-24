@@ -1,4 +1,5 @@
 import sys
+import os
 import requests
 from time import sleep
 
@@ -15,14 +16,8 @@ durations = {
     "bell": 20 * 60
 }
 
-# Configure the JMeter Load
-# Get the latest timestamp from sleuth import logs
-# Start JMeter 
-# Wait until benchmarking ends
-# Collect logs
 
-# Parse logs
-
+'''
 load = raw_input("Which load type do you want to benchmark? (constant, step, bell): ")
 
 if load != "constant" and  load != "step" and load != "bell":
@@ -64,10 +59,32 @@ while True:
     counter += 10
     print "Test Progress: " + str(float(counter)/durations[load]) + "%"
 
-print "JMeter test done"
+print "JMeter Benchmark completed"
 result = resp.text
 print result
 
 start_idx = result.index("Average rps=")
 end_idx = result.index("</h4>\n\n")
-print int(result[start_idx+12:end_idx])
+avg_rps = int(result[start_idx+12:end_idx])
+print "Average RPS: " + str(avg_rps)
+
+
+# Get the latest timestamp from sleuth import logs
+# Collect logs
+# Parse logs
+
+'''
+
+# TODO:expand for other nodes as well
+
+print os.getcwd()
+#os.system("scp -r -i ericsson.pem ubuntu@" + gateway_dns + ":/home/ubuntu/logs ./logs")
+log_files = []
+for f in os.listdir(os.getcwd() + "/logs"):
+    if f.endswith(".log"): 
+        log_files.append((f, open(os.getcwd() + "/logs/" + f, 'r')))
+
+for service, file in log_files:
+    print service
+    for line in file:
+        print line
