@@ -1,23 +1,21 @@
 import sys
 import os
 import requests
-from time import sleep
+import time
 
 jmeter_dns = "ec2-54-209-36-71.compute-1.amazonaws.com"
-gateway_dns = "ec2-54-85-216-124.compute-1.amazonaws.com"
+gateway_dns = "ec2-107-23-54-201.compute-1.amazonaws.com"
+
 
 jmeter_url = "http://" + jmeter_dns
 
-
-
 durations = {
-    "constant" : 5 * 60,
-    "step" : 20 * 60,
-    "bell": 20 * 60
+    "constant" : 1 * 60,
+    "step" : 1 * 60,
+    "bell": 1 * 60
 }
 
 
-'''
 load = raw_input("Which load type do you want to benchmark? (constant, step, bell): ")
 
 if load != "constant" and  load != "step" and load != "bell":
@@ -55,7 +53,7 @@ while True:
         sys.exit(1)
     if "Goodbye!" in resp.text:
         break 
-    sleep(10)
+    time.sleep(10)
     counter += 10
     print "Test Progress: " + str(float(counter)/durations[load]) + "%"
 
@@ -73,18 +71,55 @@ print "Average RPS: " + str(avg_rps)
 # Collect logs
 # Parse logs
 
-'''
-
 # TODO:expand for other nodes as well
 
-print os.getcwd()
-#os.system("scp -r -i ericsson.pem ubuntu@" + gateway_dns + ":/home/ubuntu/logs ./logs")
+base_dir =  "/home/ubuntu/Ericsson-Cloud-INI-Practicum-Fall2015/services/"
+log_subpaths = ["movie-service/movie_service.log",
+                "api-gateway/api_gateway.log",
+                "image-service/image_service.log",
+                "ratings-service/ratings_service.log",
+                "search-service/search_service.log",
+                "user-service/user_service.log"
+                ]
+
+logpaths = [base_dir + x for x in log_subpaths]
+
+print "Collecting Sleuth logs"
+
+for path in logpaths:
+    print path
+    os.system("scp -oStrictHostKeyChecking=no -r -i ericsson.pem ubuntu@" + gateway_dns + ":" + path + " ./logs")
+
 log_files = []
 for f in os.listdir(os.getcwd() + "/logs"):
     if f.endswith(".log"): 
         log_files.append((f, open(os.getcwd() + "/logs/" + f, 'r')))
 
-for service, file in log_files:
-    print service
+for filename, file in log_files:
+    service_name = filename.split(".")[0]
+    prev_stamp = 0
     for line in file:
-        print line
+        try:
+            # timestamps rounded to 10ms precision
+            epoch_stamp = time.mktime(time.strptime(line[:19], "%Y-%m-%d %H:%M:%S"))
+            epoch_stamp += float("0" + line[19:23])
+
+            name_idx = line.index("name=")
+            trace_idx = line.index("traceId=")
+            service_class = line[name_idx+5:trace_idx-2]
+
+            if prev_stamp == 0:
+                latency = 0
+            else:
+                latency = epoch_stamp - prev_stamp
+            prev_stamp = epoch_stamp
+
+            print "Service Name: " + service_name
+            print "Timestamp: " + str(epoch_stamp)
+            print "Service Class: " + service_class
+            #print "latency: " + str(latency)
+            print " "
+        except:
+            pass
+
+#TODO: ignore previous log timestamps
