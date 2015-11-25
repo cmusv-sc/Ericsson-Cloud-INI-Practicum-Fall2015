@@ -86,6 +86,8 @@ logpaths = [base_dir + x for x in log_subpaths]
 
 print "Collecting Sleuth logs"
 
+os.system("mkdir logs")
+
 for path in logpaths:
     print path
     os.system("scp -oStrictHostKeyChecking=no -r -i ericsson.pem ubuntu@" + gateway_dns + ":" + path + " ./logs")
