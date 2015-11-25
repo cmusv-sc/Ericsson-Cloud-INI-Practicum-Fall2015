@@ -7,6 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
+import org.springframework.context.annotation.Bean;
 
 import edu.cmu.ini.ericsson.practicum.models.ratingsService.Rating;
 import ratings_service.domain.RatingRepository;
@@ -36,5 +38,10 @@ public class RatingsServiceApplication implements CommandLineRunner {
 			System.out.println("ratings inserted " + i);
 		}
 		
+	}
+	
+	 @Bean
+	public AlwaysSampler defaultSampler() {
+		return new AlwaysSampler();
 	}
 }
