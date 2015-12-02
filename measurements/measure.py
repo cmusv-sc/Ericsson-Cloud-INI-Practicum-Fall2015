@@ -3,7 +3,7 @@ import os
 import requests
 import time
 
-jmeter_dns = "ec2-54-209-36-71.compute-1.amazonaws.com"
+jmeter_dns = "ec2-52-90-201-208.compute-1.amazonaws.com"
 gateway_dns = "ec2-107-23-54-201.compute-1.amazonaws.com"
 
 def run_jmeter():
@@ -55,7 +55,7 @@ def run_jmeter():
             break 
         time.sleep(10)
         counter += 10
-        print "Test Progress: " + str(float(counter)/durations[load]) + "%"
+        print "Test Progress: " + str(float(counter)/durations[load] * 100) + "%"
 
     print "JMeter Benchmark completed"
     result = resp.text
@@ -107,8 +107,7 @@ def parse_sleuth():
             if "sleuth.log" not in line:
                 continue
             # timestamps rounded to 10ms precision
-            epoch_stamp = time.mktime(time.strptime(line[:19], "%Y-%m-%d %H:%M:%S"))
-            epoch_stamp += float("0" + line[19:23])
+            epoch_stamp = time.mktime(time.strptime(line[:19], "%Y-%m-%d %H:%M:%S")) + float("0" + line[19:23])
 
             name_idx = line.index("name=")
             trace_idx = line.index("traceId=")
@@ -134,19 +133,47 @@ def parse_sleuth():
 
 
 def gen_table(intermediate):
-    return ""
+    workflows = {}
+
+    for entry in intermediate:
+        if entry["Workflow"] not in workflows:
+            workflows[entry["Workflow"]] = [{
+                "Service" : entry["Service"],
+                "Endpoint" : entry["Endpoint"],
+                "Timestamp" : entry["Timestamp"],
+                "Latency" : 0
+            }]
+        else:
+            last_timestamp = workflows[entry["Workflow"]][-1]["Timestamp"]
+            workflows[entry["Workflow"]].append({
+                "Service" : entry["Service"],
+                "Endpoint" : entry["Endpoint"],
+                "Timestamp" : entry["Timestamp"],
+                "Latency" : entry["Timestamp"] - last_timestamp
+            })
+    return workflows
+
+def final_readable(final):
+    for key, val in final.iteritems():
+        print "-------------------"
+        print "Workflow ID: " + str(key)
+        for call in val:
+            print "Service: " + call["Service"]
+            print "Endpoint: " + call["Endpoint"]
+            print "Latency: " + str(call["Latency"])
+            print ""
 
 
 if __name__ == "__main__":
-    #run_jmeter()
-    #collect_sleuth()
+    run_jmeter()
+    collect_sleuth()
     intermediate = parse_sleuth()
     f = open("intermediate_results", "w+")
     f.write(str(intermediate))
 
     final = gen_table(intermediate)
     g = open("final_result", "w+")
-    g.write(final)
+    g.write(str(final))
 
-
+    final_readable(final)
 
