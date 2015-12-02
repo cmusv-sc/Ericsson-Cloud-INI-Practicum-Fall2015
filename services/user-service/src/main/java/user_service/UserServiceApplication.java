@@ -25,7 +25,7 @@ public class UserServiceApplication implements CommandLineRunner {
 	@Override
 	public void run(String... arg0) throws Exception {
 		repository.deleteAll();
-		repository.save(new User("1", "John", "M", "Doctor", "15213", "6", "1qaz2wsx"));
+		repository.save(new User("1", "6", "M", "Doctor", "15213", "1qaz2wsx", "John"));
 		System.out.println("findAll():");
 		System.out.println("-------------------------------");
 		for (User movie : repository.findAll()) {

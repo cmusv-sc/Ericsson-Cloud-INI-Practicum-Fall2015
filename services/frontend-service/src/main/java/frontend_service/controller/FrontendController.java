@@ -24,6 +24,9 @@ import edu.cmu.ini.ericsson.practicum.models.apiGatewayService.MovieDetailsList;
 @Controller
 public class FrontendController {
 
+	@Autowired
+    RestTemplate restTemplate;
+	
 	@RequestMapping(value = "/login", method=RequestMethod.GET)
 	public String login(Model model) {
 		return "login";
@@ -34,10 +37,9 @@ public class FrontendController {
 						@RequestParam("uid") String userId,
 						@RequestParam("pwd") String pwd,
 						Model model) {
-		RestTemplate template = new RestTemplate();
-		User user = template.getForObject("http://API-GATEWAY/movie/user/"+userId, User.class);
+		User user = restTemplate.getForObject("http://API-GATEWAY/movie/user/"+userId, User.class);
 		if (user.getPassword().equals(pwd)) {
-			MovieDetailsList response = template.getForObject("http://MOVIE/latest/"+ n, MovieDetailsList.class);	
+			MovieDetailsList response = restTemplate.getForObject("http://MOVIES/latest/"+ n, MovieDetailsList.class);	
 	        model.addAttribute("movies", response.getMovieList());
 	        model.addAttribute("user", user);
 	        return "index";
