@@ -23,7 +23,14 @@ public class RatingController {
 	
 	@RequestMapping(value = "{id}", method=RequestMethod.GET)
 	public List<Rating> getRatingForMovie(@PathVariable String id){
-		return repository.findByMovieId(id);
+		List<Rating> ratingList = new ArrayList<Rating>();
+		Rating rating = new Rating();
+		rating.setMovieId("stub");
+		rating.setRating(5);
+		rating.setUserId("2");
+		ratingList.add(rating);
+		return ratingList;
+//		return repository.findByMovieId(id);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/latest/{n}")

@@ -5,6 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
+import org.springframework.context.annotation.Bean;
 
 import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovie;
 import similar_movie_service.domain.SimilarMovieRepository;
@@ -52,5 +54,10 @@ public class SimilarMovieService implements CommandLineRunner {
 		System.out.println("-------------------------------");
 		System.out.println(repository.findById("1"));
 		System.out.println("--------------------------------");
+	}
+	
+	 @Bean
+	public AlwaysSampler defaultSampler() {
+		return new AlwaysSampler();
 	}
 }

@@ -40,9 +40,7 @@ public class ImageController {
 		imageLinks.put("9", "http://ia.media-imdb.com/images/M/MV5BMTkxNDYxOTA4M15BMl5BanBnXkFtZTgwNTk0NzQxMTE@._V1_SX300.jpg");
 		imageLinks.put("10", "http://ia.media-imdb.com/images/M/MV5BMTc2MTQ3MDA1Nl5BMl5BanBnXkFtZTgwODA3OTI4NjE@._V1_SX300.jpg");
 	}
-	@Autowired
-	DiscoveryClient discoveryClient;
-
+	
 	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
 	public Image getImage(@PathVariable String id) throws IOException {
 		String imageLink = imageLinks.get(id);

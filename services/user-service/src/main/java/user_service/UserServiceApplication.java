@@ -5,6 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
+import org.springframework.context.annotation.Bean;
 
 import edu.cmu.ini.ericsson.practicum.models.userService.User;
 import user_service.domain.UserRepository;
@@ -23,7 +25,7 @@ public class UserServiceApplication implements CommandLineRunner {
 	@Override
 	public void run(String... arg0) throws Exception {
 		repository.deleteAll();
-		repository.save(new User("1", "John", "M", "Doctor", "15213", "6", "1qaz2wsx"));
+		repository.save(new User("1", "6", "M", "Doctor", "15213", "1qaz2wsx", "John"));
 		System.out.println("findAll():");
 		System.out.println("-------------------------------");
 		for (User movie : repository.findAll()) {
@@ -34,5 +36,10 @@ public class UserServiceApplication implements CommandLineRunner {
 		System.out.println("-------------------------------");
 		System.out.println(repository.findByName("2"));
 		System.out.println("--------------------------------");
+	}
+	
+	@Bean
+	public AlwaysSampler defaultSampler() {
+		return new AlwaysSampler();
 	}
 }

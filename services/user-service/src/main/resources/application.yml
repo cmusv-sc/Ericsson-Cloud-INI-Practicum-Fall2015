@@ -12,3 +12,9 @@ eureka:
 spring:
   application:
     name: user-service
+
+logging:
+  path: /var/log/
+  file: user_service.log
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} [trace=%X{X-Trace-Id:-},span=%X{X-Span-Id:-}] [%15.15t] %-40.40logger{39}: %m%n'
