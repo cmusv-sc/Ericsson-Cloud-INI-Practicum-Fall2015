@@ -8,6 +8,6 @@ import edu.cmu.ini.ericsson.practicum.models.movieService.Movie;
 
 @RepositoryRestResource(collectionResourceRel = "movie", path = "movie")
 public interface MovieRepository extends MongoRepository<Movie, String> {
-	public Movie findById(@Param("id") String id);
 	public Movie findByTitle(@Param("title") String title);
+	public Movie findByOmdbid(@Param("omdbid") String omdbid);
 }

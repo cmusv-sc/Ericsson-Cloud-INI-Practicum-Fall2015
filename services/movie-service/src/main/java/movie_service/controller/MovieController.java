@@ -28,10 +28,10 @@ public class MovieController {
 	@Autowired
     RestTemplate restTemplate;
 
-	@RequestMapping(method = RequestMethod.GET, value = "{id}")
-	public Movie getMovie(@PathVariable String id) {
-		Movie movie = repository.findById(id);
-		Image image = restTemplate.getForObject("http://images/image/get/{id}", Image.class, id);
+	@RequestMapping(method = RequestMethod.GET, value = "{omdbid}")
+	public Movie getMovie(@PathVariable String omdbid) {
+		Movie movie = repository.findByOmdbid(omdbid);
+		Image image = restTemplate.getForObject("http://images/image/get/{id}", Image.class, omdbid);
 		movie.setPoster(image.getImage());
 		return movie;
 	}
@@ -43,7 +43,7 @@ public class MovieController {
 		
 		ImageList imageList = restTemplate.getForObject("http://images/image/latest/{n}", ImageList.class, n);
 		for (int i = 1; i <= Integer.parseInt(n); i++) {
-			Movie movie = repository.findById(String.valueOf(i));
+			Movie movie = repository.findByOmdbid(String.valueOf(i));
 			movie.setPoster(imageList.getList().get(i-1).getImage());
 			movieList.add(movie);
 		}
@@ -58,15 +58,17 @@ public class MovieController {
 		return repository.save(movie);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = "{id}")
-	public Movie updateMovie(@PathVariable String id, @RequestBody Movie movie) {
-		Movie update = repository.findOne(id);
+	@RequestMapping(method = RequestMethod.PUT, value = "{omdbid}")
+	public Movie updateMovie(@PathVariable String omdbid, @RequestBody Movie movie) {
+		Movie update = repository.findOne(omdbid);
+		update.setOmdbid(movie.getOmdbid());
 		update.setCast(movie.getCast());
 		update.setCountry(movie.getCountry());
 		update.setDirector(movie.getDirector());
 		update.setFullplot(movie.getFullplot());
 		update.setGenre(movie.getGenre());
 		update.setImdbid(movie.getImdbid());
+		update.setImdbrating(movie.getImdbrating());
 		update.setLanguage(movie.getLanguage());
 		update.setPlot(movie.getPlot());
 		update.setPoster(movie.getPoster());
@@ -77,8 +79,8 @@ public class MovieController {
 		return repository.save(update);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, value = "{id}")
-	public void deleteMovie(@PathVariable String id) {
-		repository.delete(id);
+	@RequestMapping(method = RequestMethod.DELETE, value = "{omdbid}")
+	public void deleteMovie(@PathVariable String omdbid) {
+		repository.delete(omdbid);
 	}
 }
