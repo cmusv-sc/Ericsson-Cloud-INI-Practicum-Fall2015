@@ -1,0 +1,67 @@
+{
+  "comment": "Worfkflow",
+  "nodes": [
+    {
+      "title": "Metadata",
+      "latency": "120",
+      "type": "movie",
+      "id": 1
+    },
+    {
+      "title": "Image",
+      "latency": "100",
+      "type": "movie",
+      "id": 2
+    },
+    {
+      "title": "API Gateway",
+      "latency": "100",
+      "type": "movie",
+      "id": 3
+    },
+    {
+      "title": "Rating",
+      "type": "movie",
+      "id": 4
+    },
+    {
+      "title": "Node1",
+      "root": true,
+      "load": 80,
+      "type": "Node",
+      "id": 5
+    }
+  ],
+  "edges": [
+    {
+      "source": 5,
+      "target": 1,
+      "relatedness": "DEPLOYED"
+    },
+    {
+      "source": 5,
+      "target": 2,
+      "relatedness": "DEPLOYED"
+    },
+    {
+      "source": 5,
+      "target": 3,
+      "relatedness": "DEPLOYED"
+    },
+    {
+      "source": 5,
+      "target": 4,
+      "relatedness": "DEPLOYED"
+    },
+    {
+      "source": 3,
+      "target": 1,
+      "relatedness": "100ms"
+    },
+    {
+      "source": 1,
+      "target": 2,
+      "relatedness": "150ms"
+    }
+  ]
+}
