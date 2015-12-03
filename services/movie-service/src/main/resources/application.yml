@@ -12,10 +12,6 @@ eureka:
 spring:
   application:
     name: movies
-  data:
-   mongodb:
-     host: 192.168.99.100
-
     
 logging:
   path: /var/log/
