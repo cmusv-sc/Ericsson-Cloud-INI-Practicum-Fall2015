@@ -15,6 +15,8 @@ import rx.Observable;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
 
+import api_gateway.Utils;
+import api_gateway.controller.GatewayController;
 import edu.cmu.ini.ericsson.practicum.models.movieService.Movie;
 import edu.cmu.ini.ericsson.practicum.models.movieService.MovieList;
 import rx.Observable;
@@ -26,11 +28,13 @@ public class MovieIntegrationService {
     RestTemplate restTemplate;
 
 	@HystrixCommand(fallbackMethod = "stubMovie")
-    public Observable<Movie> getMovie(final String mID) {
+    public Observable<Movie> getMovie(final String mID, final String trace_uuid) {
+		Utils.trace_log("api_gateway/movie/"+mID, "api_gateway", "movie_service", trace_uuid, GatewayController.class);
         return new ObservableResult<Movie>() {
             @Override
             public Movie invoke() {
-                return restTemplate.getForObject("http://movies/movie/{mID}", Movie.class, mID);
+                return restTemplate.getForObject("http://movies/movie/{mID}/{trace_uuid}",
+                		Movie.class, mID, trace_uuid);
             }
         };
     }
@@ -54,7 +58,7 @@ public class MovieIntegrationService {
 		return movie;
 	}
 	
-    private Movie stubMovie(final String mID) {
+    private Movie stubMovie(final String mID, final String uuid) {
         Movie stub = new Movie();
 		stub.setCast(null);
 		stub.setCountry("");

@@ -41,9 +41,10 @@ public class ImageController {
 		imageLinks.put("10", "http://ia.media-imdb.com/images/M/MV5BMTc2MTQ3MDA1Nl5BMl5BanBnXkFtZTgwODA3OTI4NjE@._V1_SX300.jpg");
 	}
 	
-	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-	public Image getImage(@PathVariable String id) throws IOException {
+	@RequestMapping(value = "/get/{id}/{trace_uuid}", method = RequestMethod.GET)
+	public Image getImage(@PathVariable String id, @PathVariable String trace_uuid) throws IOException {
 		String imageLink = imageLinks.get(id);
+		Utils.trace_log("image_service/image/get/"+id, "image_service", "null", trace_uuid, ImageController.class);
 		if(imageLink == null)
 			imageLink = DEFAULT_IMAGE_LINK;
 		return new Image(imageLink);

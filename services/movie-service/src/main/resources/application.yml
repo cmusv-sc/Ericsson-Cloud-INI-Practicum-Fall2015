@@ -12,10 +12,11 @@ eureka:
 spring:
   application:
     name: movies
+  data:
+   mongodb:
+     host: 192.168.99.100
 
     
 logging:
   path: /var/log/
   file: movie_service.log
-  pattern:
-    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} [trace=%X{X-Trace-Id:-},span=%X{X-Span-Id:-}] [%15.15t] %-40.40logger{39}: %m%n'

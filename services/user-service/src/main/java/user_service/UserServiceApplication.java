@@ -37,9 +37,4 @@ public class UserServiceApplication implements CommandLineRunner {
 		System.out.println(repository.findByName("2"));
 		System.out.println("--------------------------------");
 	}
-	
-	@Bean
-	public AlwaysSampler defaultSampler() {
-		return new AlwaysSampler();
-	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.cmu.ini.ericsson.practicum.models.ratingsService.Rating;
 import edu.cmu.ini.ericsson.practicum.models.ratingsService.RatingList;
+import ratings_service.Utils;
 import ratings_service.domain.RatingRepository;
 
 @RestController
@@ -21,8 +22,9 @@ public class RatingController {
 	@Autowired
 	private RatingRepository repository;
 	
-	@RequestMapping(value = "{id}", method=RequestMethod.GET)
-	public List<Rating> getRatingForMovie(@PathVariable String id){
+	@RequestMapping(value = "{id}/{trace_uuid}", method=RequestMethod.GET)
+	public List<Rating> getRatingForMovie(@PathVariable String id, @PathVariable String trace_uuid){
+		Utils.trace_log("ratings_service/movie/"+id, "ratings_service", "null", trace_uuid, RatingController.class);
 		return repository.findByMovieId(id);
 	}
 	

@@ -14,6 +14,7 @@ import edu.cmu.ini.ericsson.practicum.models.movieService.Movie;
 import edu.cmu.ini.ericsson.practicum.models.movieService.MovieList;
 import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovie;
 import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovieList;
+import similar_movie_service.Utils;
 import similar_movie_service.domain.SimilarMovieRepository;
 
 @RestController
@@ -23,8 +24,9 @@ public class SimilarMovieController {
 	@Autowired
 	private SimilarMovieRepository repository;
 
-	@RequestMapping(method=RequestMethod.GET, value="{id}")
-	public SimilarMovie getMovie(@PathVariable String id){
+	@RequestMapping(method=RequestMethod.GET, value="{id}/{trace_uuid}")
+	public SimilarMovie getMovie(@PathVariable String id, @PathVariable String trace_uuid){
+		Utils.trace_log("similar_movie_service/similar-movie/"+id, "similar_movie_service", "null", trace_uuid, SimilarMovieController.class);
 		return repository.findById(id);
 	}
 

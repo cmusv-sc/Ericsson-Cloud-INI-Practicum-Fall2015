@@ -15,9 +15,4 @@ public class ApiGatewayApplication {
     public static void main(String[] args) {
         SpringApplication.run(ApiGatewayApplication.class, args);
     }
-    
-    @Bean
-   	public AlwaysSampler defaultSampler() {
-   		return new AlwaysSampler();
-   	}
 }

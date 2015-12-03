@@ -15,24 +15,25 @@ import rx.Observable;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
 
+import api_gateway.Utils;
+import api_gateway.controller.GatewayController;
 import edu.cmu.ini.ericsson.practicum.models.ratingsService.Rating;
 import edu.cmu.ini.ericsson.practicum.models.ratingsService.RatingList;
 
-import org.springframework.http.HttpMethod;
-
-import rx.Observable;
 @Service
 public class RatingIntegrationService {
     @Autowired
     RestTemplate restTemplate;
 
     @HystrixCommand(fallbackMethod = "stubRating")
-    public Observable<List<Rating>> ratingFor(String mID) {
+    public Observable<List<Rating>> ratingFor(String mID, String trace_uuid) {
+    	Utils.trace_log("api_gateway/movie/"+mID, "api_gateway", "rating_service", trace_uuid, GatewayController.class);
         return new ObservableResult<List<Rating>>() {
             @Override
             public List<Rating> invoke() {
                 ParameterizedTypeReference<List<Rating>> responseType = new ParameterizedTypeReference<List<Rating>>() {};
-                return restTemplate.exchange("http://rating/movie/{mID}", HttpMethod.GET, null, responseType, mID).getBody();
+                return restTemplate.exchange("http://rating/movie/{mID}/{trace_uuid}",
+                		HttpMethod.GET, null, responseType, mID, trace_uuid).getBody();
             }
         };
     }
@@ -46,8 +47,8 @@ public class RatingIntegrationService {
             }
         };
     }
-
-    private List<Rating> stubRating(String mID) {
+    
+    private List<Rating> stubRating(String mID, String trace_uuid) {
         Rating rating = new Rating();
         rating.setMovieId(mID);
         rating.setRating(3);
