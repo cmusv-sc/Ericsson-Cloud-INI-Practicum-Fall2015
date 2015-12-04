@@ -55,9 +55,4 @@ public class SimilarMovieService implements CommandLineRunner {
 		System.out.println(repository.findById("1"));
 		System.out.println("--------------------------------");
 	}
-	
-	 @Bean
-	public AlwaysSampler defaultSampler() {
-		return new AlwaysSampler();
-	}
 }

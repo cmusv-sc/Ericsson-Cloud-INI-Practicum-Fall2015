@@ -3,7 +3,9 @@ package api_gateway.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,13 +41,14 @@ public class GatewayController {
     
     @Autowired
     UserIntegrationService userIntegrationService;
-
+    
     @RequestMapping(value="{mID}", method=RequestMethod.GET)
     public DeferredResult<MovieDetails> getMovieDetails(@PathVariable String mID) {
+    	String uuid = UUID.randomUUID().toString();
         Observable<MovieDetails> details = Observable.zip(
-			movieIntegrationService.getMovie(mID),
-			ratingIntegrationService.ratingFor(mID),
-			similarMovieIntegrationService.getSimilarMovie(mID),
+			movieIntegrationService.getMovie(mID, uuid),
+			ratingIntegrationService.ratingFor(mID, uuid),
+			similarMovieIntegrationService.getSimilarMovie(mID, uuid),
             (movie, ratings, similars) -> {
                 MovieDetails movieDetails = new MovieDetails();
                 movieDetails.setMovie(movie);

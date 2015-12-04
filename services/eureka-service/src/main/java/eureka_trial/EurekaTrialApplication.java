@@ -14,8 +14,4 @@ public class EurekaTrialApplication {
         SpringApplication.run(EurekaTrialApplication.class, args);
     }
     
-    @Bean
-   	public AlwaysSampler defaultSampler() {
-   		return new AlwaysSampler();
-   	}
 }

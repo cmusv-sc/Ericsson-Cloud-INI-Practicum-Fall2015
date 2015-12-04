@@ -1,5 +1,5 @@
 server:
-  port: ${SERVICE_PORT:10000}
+  port: ${SERVICE_PORT:80}
 
 eureka:
   client:
@@ -16,5 +16,3 @@ spring:
 logging:
   path: /var/log/
   file: api_gateway.log
-  pattern:
-    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} [trace=%X{X-Trace-Id:-},span=%X{X-Span-Id:-}] [%15.15t] %-40.40logger{39}: %m%n'

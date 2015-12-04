@@ -3,8 +3,10 @@ package movie_service.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import movie_service.Utils;
 import movie_service.domain.MovieRepository;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,11 +29,15 @@ public class MovieController {
 	
 	@Autowired
     RestTemplate restTemplate;
+	
+	private static final Logger logger = Logger.getLogger(MovieController.class);
 
-	@RequestMapping(method = RequestMethod.GET, value = "{omdbid}")
-	public Movie getMovie(@PathVariable String omdbid) {
+	@RequestMapping(method = RequestMethod.GET, value = "{omdbid}/{trace_uuid}")
+	public Movie getMovie(@PathVariable String omdbid, @PathVariable String trace_uuid) {
 		Movie movie = repository.findByOmdbid(omdbid);
-		Image image = restTemplate.getForObject("http://images/image/get/{id}", Image.class, omdbid);
+		Utils.trace_log("movie_service/movie/"+omdbid, "movie_service", "image_service", trace_uuid, MovieController.class);
+		Image image = restTemplate.getForObject("http://images/image/get/{id}/{trace_uuid}",
+				Image.class, omdbid, trace_uuid);
 		movie.setPoster(image.getImage());
 		return movie;
 	}

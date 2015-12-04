@@ -11,6 +11,8 @@ import rx.Observable;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
 
+import api_gateway.Utils;
+import api_gateway.controller.GatewayController;
 import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovie;
 import edu.cmu.ini.ericsson.practicum.models.similarMovieService.SimilarMovieList;
 import rx.Observable;
@@ -21,11 +23,14 @@ public class SimilarMovieIntegrationService {
     RestTemplate restTemplate;
 
 	@HystrixCommand(fallbackMethod = "stubSimilarMovie")
-    public Observable<SimilarMovie> getSimilarMovie(final String mID) {
+    public Observable<SimilarMovie> getSimilarMovie(final String mID, final String trace_uuid) {
+		Utils.trace_log("api_gateway/movie/"+mID,"api_gateway", "similar_movie_service",
+				trace_uuid, GatewayController.class);
         return new ObservableResult<SimilarMovie>() {
             @Override
             public SimilarMovie invoke() {
-                return restTemplate.getForObject("http://similar-movies/similar-movie/{mID}", SimilarMovie.class, mID);
+                return restTemplate.getForObject("http://similar-movies/similar-movie/{mID}/{trace_uuid}",
+                		SimilarMovie.class, mID, trace_uuid);
             }
         };
     }
@@ -40,7 +45,7 @@ public class SimilarMovieIntegrationService {
 	        };
 	    }
 
-	private SimilarMovie stubSimilarMovie(final String mID) {
+	private SimilarMovie stubSimilarMovie(final String mID,final String trace_uuid) {
 		SimilarMovie stub = new SimilarMovie();
 		stub.setId(mID);
         stub.setName("fallback movie");
