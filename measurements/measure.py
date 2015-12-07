@@ -104,16 +104,19 @@ def parse_sleuth():
         service_name = filename.split(".")[0]
         prev_stamp = 0
         for line in file:
-            if "sleuth.log" not in line:
+            if "EricssonTrace" not in line:
                 continue
             # timestamps rounded to 10ms precision
             epoch_stamp = time.mktime(time.strptime(line[:19], "%Y-%m-%d %H:%M:%S")) + float("0" + line[19:23])
 
-            name_idx = line.index("name=")
-            trace_idx = line.index("traceId=")
-            parents_idx = line.index("parents=[")
-            endpoint = line[name_idx+5:trace_idx-2]
-            trace_id = line[trace_idx+8:parents_idx-2]
+            trace_idx = line.index("traceID=")
+            endpoint_idx = line.index("endpoint=")
+            service_idx = line.index("S_at=")
+            sout_idx = line.index("S_out=")
+
+            trace_id = line[trace_idx+8:endpoint_idx-2]
+            endpoint = line[endpoint_idx+9:service_idx-2]
+            service_name = line[service_idx+5:sout_idx-2]
             
             # Convert trace_id to workflow id
             if trace_id not in traces:
