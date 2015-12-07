@@ -12,6 +12,10 @@ eureka:
 spring:
   application:
     name: similar-movies
+  data:
+    mongodb:
+      host: ${HOST_IP:localhost}
+      port: ${MONGO_PORT:27017}
 
 logging:
   path: /var/log/
