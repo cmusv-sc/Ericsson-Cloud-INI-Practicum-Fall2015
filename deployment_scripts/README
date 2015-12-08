@@ -1,0 +1,10 @@
+You are mainly concerned with bootstrap.sh and deploy.sh.
+
+Docker Images: Use the names of images from https://hub.docker.com/u/abhishekshivanna
+
+Here is how to use these scripts
+1) Go to pem_file.location and enter the complete path to your pemfile for the target instances (Cluster). Also enter the public IP addresses of each of the instances in your cluster in nodes.list
+2) Run ./bootstrap.sh. It will go and start mongo docker on all instances in the cluster, and randomly select one instance and deploy eureka on it. It would note down the port and instance IP of Eureka and write it to the file eureka.location
+3) Run ./deploy.sh <ip of node> <docker image name>. IP of node is the public IP. The docker image name is the name of image (Currently under abhishekshivanna's hub.) If you are trying to deploy abhishekshivanna/api-gateway on 54.64.74.84, enter ./deploy.sh 54.64.74.84 api-gateway. abhishekshivanna is automatically put into the path.
+
+The other scripts and files here are mostly helper scripts. Don't bother about them.
