@@ -1,6 +1,10 @@
 server:
   port: ${SERVICE_PORT:9090}
 
+spring:
+  application:
+    name: frontend
+
 eureka:
   client:
     serviceUrl:
@@ -8,10 +12,8 @@ eureka:
   instance:
     ip-address: ${HOST_IP:localhost}
     prefer-ip-address: true
-
-spring:
-  application:
-    name: frontend
+    metadataMap:
+      instanceId: ${spring.application.name}:${SERVICE_PORT:9090}
 
 logging:
   path: /var/log/
