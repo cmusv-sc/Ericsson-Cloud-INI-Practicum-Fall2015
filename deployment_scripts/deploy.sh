@@ -9,6 +9,8 @@ fi
 
 if [ $2 == "api-gateway" ]; then
    SERVICE_PORT=80
+   rm apigateway.location
+   echo "DNS=$1" >> apigateway.location
 else 
    SERVICE_PORT=$(shuf -i 5000-50000 -n 1)
 fi

@@ -8,3 +8,5 @@ Here is how to use these scripts
 3) Run ./deploy.sh <ip of node> <docker image name>. IP of node is the public IP. The docker image name is the name of image (Currently under abhishekshivanna's hub.) If you are trying to deploy abhishekshivanna/api-gateway on 54.64.74.84, enter ./deploy.sh 54.64.74.84 api-gateway. abhishekshivanna is automatically put into the path.
 
 The other scripts and files here are mostly helper scripts. Don't bother about them.
+
+When the api-gateway is deployed, its DNS is put in the apigateway.location file. Use this DNS to start the test!
