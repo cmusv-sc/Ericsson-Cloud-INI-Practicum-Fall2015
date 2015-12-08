@@ -67,8 +67,8 @@ def run_jmeter():
     print "Average RPS: " + str(avg_rps)
 
 
-# collect_sleuth collects all sleuth logs from individual services to the ./logs folder
-def collect_sleuth():
+# collect_logs collects all application-level logs from individual services to the ./logs folder
+def collect_logs():
     # TODO:expand for other nodes rather than just the gateway node
     print "Collecting Sleuth logs"
     base_dir =  "/home/ubuntu/Ericsson-Cloud-INI-Practicum-Fall2015/services/"
@@ -87,8 +87,8 @@ def collect_sleuth():
         os.system("scp -oStrictHostKeyChecking=no -r -i ericsson.pem ubuntu@" + gateway_dns + ":" + path + " ./logs")
 
 
-def parse_sleuth():
-    # Parse_sleuth parses sleuth log messages to create the required messages of 
+def parse_logs():
+    # parse_logs parses application log messages to create the required messages of 
     # service_name, timestamp, service_class, workflow_id
     log_files = []
     for f in os.listdir(os.getcwd() + "/logs"):
@@ -101,8 +101,6 @@ def parse_sleuth():
     result = []
 
     for filename, file in log_files:
-        service_name = filename.split(".")[0]
-        prev_stamp = 0
         for line in file:
             if "EricssonTrace" not in line:
                 continue
@@ -134,27 +132,41 @@ def parse_sleuth():
 
     return result
 
-
-def gen_table(intermediate):
+def group_by_workflow(intermediate):
     workflows = {}
 
     for entry in intermediate:
         if entry["Workflow"] not in workflows:
-            workflows[entry["Workflow"]] = [{
-                "Service" : entry["Service"],
-                "Endpoint" : entry["Endpoint"],
-                "Timestamp" : entry["Timestamp"],
-                "Latency" : 0
-            }]
-        else:
-            last_timestamp = workflows[entry["Workflow"]][-1]["Timestamp"]
-            workflows[entry["Workflow"]].append({
-                "Service" : entry["Service"],
-                "Endpoint" : entry["Endpoint"],
-                "Timestamp" : entry["Timestamp"],
-                "Latency" : entry["Timestamp"] - last_timestamp
-            })
+            workflows[entry["Workflow"]] = []
+        workflows[entry["Workflow"]].append({
+            "Service" : entry["Service"],
+            "Endpoint" : entry["Endpoint"],
+            "Timestamp" : entry["Timestamp"]
+        })
     return workflows
+
+
+def gen_latency(grouped):
+    res_workflows = {}
+
+    for workflow_id, services in grouped.iteritems():
+        last_timestamp = 0
+        if workflow_id not in res_workflows:
+            res_workflows[workflow_id] = []
+
+        sorted_services = sorted(services, key=lambda k:k['Timestamp'])
+        for service in sorted_services:
+            if last_timestamp == 0:
+                latency = 0
+            else:
+                latency = service["Timestamp"] - last_timestamp
+            last_timestamp = service["Timestamp"]
+            res_workflows[workflow_id].append({
+                "Service" : service["Service"],
+                "Endpoint" : service["Endpoint"],
+                "Latency" : latency
+            })
+    return res_workflows
 
 def final_readable(final):
     for key, val in final.iteritems():
@@ -169,14 +181,17 @@ def final_readable(final):
 
 if __name__ == "__main__":
     run_jmeter()
-    collect_sleuth()
-    intermediate = parse_sleuth()
+    collect_logs()
+    intermediate = parse_logs()
     f = open("intermediate_results", "w+")
     f.write(str(intermediate))
 
-    final = gen_table(intermediate)
+    grouped = group_by_workflow(intermediate)
+    f = open("grouped_results", "w+")
+    f.write(str(grouped))
+
+    final = gen_latency(grouped)
     g = open("final_result", "w+")
     g.write(str(final))
 
     final_readable(final)
-
