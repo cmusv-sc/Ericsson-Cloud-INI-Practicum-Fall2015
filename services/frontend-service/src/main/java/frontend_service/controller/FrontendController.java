@@ -39,7 +39,7 @@ public class FrontendController {
 						Model model) {
 		User user = restTemplate.getForObject("http://API-GATEWAY/movie/user/"+userId, User.class);
 		if (user.getPassword().equals(pwd)) {
-			MovieDetailsList response = restTemplate.getForObject("http://MOVIES/latest/"+ n, MovieDetailsList.class);	
+			MovieDetailsList response = restTemplate.getForObject("http://API-GATEWAY/movie/latest/"+ n, MovieDetailsList.class);	
 	        model.addAttribute("movies", response.getMovieList());
 	        model.addAttribute("user", user);
 	        return "index";
