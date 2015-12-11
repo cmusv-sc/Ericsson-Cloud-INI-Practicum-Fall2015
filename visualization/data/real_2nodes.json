@@ -24,14 +24,14 @@
       "id": 4
     },
     {
-      "title": "Swarm-1",
+      "title": "ec2-54-209-36-71",
       "root": true,
       "load": 80,
       "type": "Node",
       "id": 5
     },
     {
-      "title": "Swarm-2",
+      "title": "ec2-52-90-122-65",
       "root": true,
       "load": 80,
       "type": "Node",
@@ -63,17 +63,17 @@
     {
       "source": 2,
       "target": 3,
-      "relatedness": "128.31 ms"
+      "relatedness": "2.27 ms"
     },
     {
       "source": 2,
       "target": 4,
-      "relatedness": "144.23 ms"
+      "relatedness": "7.61 ms"
     },
 	{
       "source": 4,
       "target": 1,
-      "relatedness": "4.69 ms"
+      "relatedness": "0.79 ms"
     }
   ]
 }

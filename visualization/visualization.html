@@ -18,7 +18,7 @@
              linkDistance: function(){ return 800; },
              nodeCaption: function(node) {
                if(node.load) {
-         return "Node: " + node.title + " Load: " + node.load;
+         return "Node: " + node.title 
          }
          else {
          return node.title
@@ -38,7 +38,8 @@
              },
              edgeStyle: {
                "all": {
-               "width": 4
+               "width": 4,
+			   "color": "#ffffff"
              }
              }
              };
